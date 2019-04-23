@@ -13,10 +13,3 @@ private:
 
 };
 
-CFichier::CFichier()
-{
-}
-
-CFichier::~CFichier()
-{
-}
