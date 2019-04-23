@@ -5,7 +5,7 @@
 #include "CMatrice.h"
 
 #include <iostream>
-#include <stdio.h>
+
 
 
 int main()
@@ -13,15 +13,8 @@ int main()
 	printf("Hello World!\n");
 
 	CMatrice <int> MatriceEntier1;
+	MatriceEntier1.MTPAfficherMatrice();
 
-	/*for (int i = 0; i < MTPP1.MTPLire_NbLigne(); i++)
-	{
-		for (int j = 0; j < MTPP1.MTPLire_NbColonne(); j++)
-		{
-			//printf("  MTPP1.MTPLireElement(i,j) ");
-		}
-		printf("\n");
-	}*/
 
 
 	getchar();
