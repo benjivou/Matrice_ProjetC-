@@ -115,6 +115,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CFichier.h" />
+    <ClInclude Include="CMatrice.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CFichier.cpp" />
+    <ClCompile Include="CMatrice.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
