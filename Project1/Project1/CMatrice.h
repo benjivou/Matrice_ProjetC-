@@ -1,8 +1,8 @@
-#pragma once
+
 class CMatrice
 {
-public:
-	CMatrice();
-	~CMatrice();
+	public:
+		CMatrice();
+		~CMatrice();
 };
 
