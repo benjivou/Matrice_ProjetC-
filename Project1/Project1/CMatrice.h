@@ -43,3 +43,4 @@ public:
 
 #endif //CMATRICE_H
 
+#include "CMatrice.cpp"

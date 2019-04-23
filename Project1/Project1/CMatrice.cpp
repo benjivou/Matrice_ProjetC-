@@ -1,6 +1,5 @@
 // CMatrice.cpp : fichier source correspondant à l'en-tête précompilé ; nécessaire au bon déroulement de la compilation
 
-#include "CMatrice.h"
 
 
 //Constructeurs et destructeurs
@@ -10,7 +9,7 @@ CMatrice<MType>::CMatrice()
 {
 	inbColonne = 0;
 	inbLigne = 0;
-	** pMTPMatrice = nullptr;
+	pMTPMatrice = nullptr;
 }
 
 template<class MType>
