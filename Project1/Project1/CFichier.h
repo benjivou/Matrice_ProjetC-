@@ -14,4 +14,4 @@ CFichier::CFichier()
 
 CFichier::~CFichier()
 {
-}
+}é
