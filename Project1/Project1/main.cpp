@@ -12,7 +12,7 @@ int main()
 {
 	printf("Hello World!\n");
 
-	CMatrice <int> MatriceEntier1(3);
+	CMatrice <int> MatriceEntier1(3,2);
 
 	/*for (unsigned int i = 0; i < MatriceEntier1.MTPLire_NbLigne(); i++)
 	{

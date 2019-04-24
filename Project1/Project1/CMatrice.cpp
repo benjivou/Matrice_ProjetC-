@@ -21,11 +21,10 @@ CMatrice<MType>::CMatrice(unsigned int uiTaille)
 	
 	ppMTPMatrice = new MType*[uinbLigne];
 
-	for (unsigned int iMTPBoucle1 = 0; iMTPBoucle1 < uinbLigne; iMTPBoucle1)
+	for (unsigned int iMTPBoucle1 = 0; iMTPBoucle1 < uinbLigne; iMTPBoucle1++)
 	{
 			ppMTPMatrice[iMTPBoucle1] = new MType[uinbColonne];
 	}
-	printf("dddddddddddd");
 
 	for (unsigned int iMTPBoucle = 0; iMTPBoucle < uinbLigne; iMTPBoucle++)
 	{
@@ -41,7 +40,21 @@ CMatrice<MType>::CMatrice(unsigned int uiNBLigne, unsigned int uiNBCol)
 {
 	uinbColonne = uiNBCol;
 	uinbLigne = uiNBLigne;
-	ppMTPMatrice = nullptr;
+	
+	ppMTPMatrice = new MType*[uinbLigne];
+
+	for (unsigned int iMTPBoucle1 = 0; iMTPBoucle1 < uinbLigne; iMTPBoucle1++)
+	{
+		ppMTPMatrice[iMTPBoucle1] = new MType[uinbColonne];
+	}
+
+	for (unsigned int iMTPBoucle = 0; iMTPBoucle < uinbLigne; iMTPBoucle++)
+	{
+		for (unsigned int jMTPBoucle = 0; jMTPBoucle < uinbColonne; jMTPBoucle++)
+		{
+			ppMTPMatrice[iMTPBoucle][jMTPBoucle] = 0;
+		}
+	}
 }
 
 template<class MType>
