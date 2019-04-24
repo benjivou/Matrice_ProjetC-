@@ -1,6 +1,7 @@
 // CMatrice.cpp : fichier source correspondant à l'en-tête précompilé ; nécessaire au bon déroulement de la compilation
 
 #include <stdio.h>
+#include <stdlib.h>
 
 //Constructeurs et destructeurs
 
@@ -9,7 +10,7 @@ CMatrice<MType>::CMatrice()
 {
 	uinbColonne = 0;
 	uinbLigne = 0;
-	pMTPMatrice = nullptr;
+	ppMTPMatrice = nullptr;
 }
 
 template<class MType>
@@ -17,13 +18,30 @@ CMatrice<MType>::CMatrice(unsigned int uiTaille)
 {
 	uinbColonne = uiTaille;
 	uinbLigne = uiTaille;
+	
+	ppMTPMatrice = new MType*[uinbLigne];
+
+	for (unsigned int iMTPBoucle1 = 0; iMTPBoucle1 < uinbLigne; iMTPBoucle1)
+	{
+			ppMTPMatrice[iMTPBoucle1] = new MType[uinbColonne];
+	}
+	printf("dddddddddddd");
+
+	for (unsigned int iMTPBoucle = 0; iMTPBoucle < uinbLigne; iMTPBoucle++)
+	{
+		for (unsigned int jMTPBoucle = 0; jMTPBoucle < uinbColonne; jMTPBoucle++)
+		{
+			ppMTPMatrice[iMTPBoucle][jMTPBoucle] = 0;
+		}
+	}
 }
 
 template<class MType>
-CMatrice<MType>::CMatrice(unsigned int uiNBCol, unsigned int uiNBLigne)
+CMatrice<MType>::CMatrice(unsigned int uiNBLigne, unsigned int uiNBCol)
 {
 	uinbColonne = uiNBCol;
 	uinbLigne = uiNBLigne;
+	ppMTPMatrice = nullptr;
 }
 
 template<class MType>
@@ -42,14 +60,16 @@ CMatrice<MType>::~CMatrice()
 template<class MType>
 void CMatrice<MType>::MTPAfficherMatrice()
 {
-	for (unsigned int i = 0; i < uinbLigne; i++)
+	printf("Matrice : \n");
+	for (unsigned int iMTPBoucle = 0; iMTPBoucle < uinbLigne; iMTPBoucle++)
 	{
-		for (unsigned int j = 0; j < uinbColonne; j++)
+		for (unsigned int jMTPBoucle = 0; jMTPBoucle < uinbColonne; jMTPBoucle++)
 		{
-			printf("pMTPMatrice[uinbLigne][uinbColonne]   ");
+			printf(" %d ",ppMTPMatrice[iMTPBoucle][jMTPBoucle]);
 		}
 		printf("\n");
 	}
+	printf("\n");
 }
 
 template<class MType>

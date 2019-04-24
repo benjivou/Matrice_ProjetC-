@@ -12,7 +12,16 @@ int main()
 {
 	printf("Hello World!\n");
 
-	CMatrice <int> MatriceEntier1;
+	CMatrice <int> MatriceEntier1(3);
+
+	/*for (unsigned int i = 0; i < MatriceEntier1.MTPLire_NbLigne(); i++)
+	{
+		for (unsigned int j = 0; j < MatriceEntier1.MTPLire_NbColonne(); j++)
+		{
+			MatriceEntier1.MTPModifier_Element(i, j, i);
+		}
+	}*/
+
 	MatriceEntier1.MTPAfficherMatrice();
 
 
