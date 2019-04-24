@@ -15,26 +15,28 @@ class CMatrice
 {
 	//Attributs
 private : 
-	int inbColonne;
-	int inbLigne;
-	MType ** pMTPMatrice; 
+	unsigned int uinbColonne;
+	unsigned int uinbLigne;
+	MType ** ppMTPMatrice; 
 
 	//Constructeurs et Destructeurs
 
 public:
 	CMatrice<MType>();
-	CMatrice<MType>(int iTaille);
-	CMatrice<MType>(int iNBCol, int iNBLigne);
+	CMatrice<MType>(unsigned int iTaille);
+	CMatrice<MType>(unsigned int iNBLigne, unsigned int iNBCol);
 	CMatrice<MType>(CMatrice<MType> & MTPP1);
 
 	~CMatrice<MType>();
 
+	CMatrice<MType> &operator=(CMatrice<MType> &MTPParam);
+
 	//Méthodes
 
-	MType **MTPLire_Element(int iNumCol, int iNumLigne) { return pMTPMatrice[iNumLigne][iNumCol]; } //inline
-	void MTPModifier_Element(int iNumCol, int iNumLigne, int iElement) { pMTPMatrice[iNumLigne][iNumCol] = iElement; } //inline
-	int MTPLire_NbLigne() { return inbLigne; } //inline
-	int MTPLire_NbColonne() { return inbColonne; } //inline
+	unsigned int MTPLire_Element(unsigned int iNumLigne, unsigned int iNumCol) { return ppMTPMatrice[iNumLigne][iNumCol]; } //inline
+	void MTPModifier_Element(unsigned int iNumLigne, unsigned int iNumCol , unsigned int iElement) { ppMTPMatrice[iNumLigne][iNumCol] = iElement; } //inline
+	unsigned int MTPLire_NbLigne() { return uinbLigne; } //inline
+	unsigned int MTPLire_NbColonne() { return uinbColonne; } //inline
 
 	void MTPAfficherMatrice();
 
@@ -43,3 +45,4 @@ public:
 
 #endif //CMATRICE_H
 
+#include "CMatrice.cpp"

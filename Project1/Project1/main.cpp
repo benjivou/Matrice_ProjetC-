@@ -5,23 +5,25 @@
 #include "CMatrice.h"
 
 #include <iostream>
-#include <stdio.h>
+
 
 
 int main()
 {
 	printf("Hello World!\n");
 
-	//CMatrice <int> MatriceEntier1;
+	CMatrice <int> MatriceEntier1(3,2);
 
-	/*for (int i = 0; i < MTPP1.MTPLire_NbLigne(); i++)
+	/*for (unsigned int i = 0; i < MatriceEntier1.MTPLire_NbLigne(); i++)
 	{
-		for (int j = 0; j < MTPP1.MTPLire_NbColonne(); j++)
+		for (unsigned int j = 0; j < MatriceEntier1.MTPLire_NbColonne(); j++)
 		{
-			//printf("  MTPP1.MTPLireElement(i,j) ");
+			MatriceEntier1.MTPModifier_Element(i, j, i);
 		}
-		printf("\n");
 	}*/
+
+	MatriceEntier1.MTPAfficherMatrice();
+
 
 
 	getchar();
