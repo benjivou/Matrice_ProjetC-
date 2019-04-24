@@ -35,16 +35,16 @@ CFichier::CFichier(char * cAdresse)
 	int iPos1;						// position dns la ligne
 	int iValid = 1;					// dit s'il y a une erreur
 	unsigned int uiLigne = 0;		// donne la ligne du fichier en cours d'étude
-	char cLine[MAX_LONGUEUR_LINE];	// ligne d'argument pour créer la matrice
-	char cCaractère;
+	char pcLine[MAX_LONGUEUR_LINE];	// ligne d'argument pour créer la matrice
 
 	/* Variable nécessaire à la création de matrice*/
-	char* pcArgType[MAX_TAILLE_ARG];
-	unsigned int iColonne;
+	char pcArgType[MAX_TAILLE_ARG];
+	unsigned int uiColonne;
 	unsigned int iLigne;
 
 	/* Step1 : Ouverture du flux */
-	FILE *pfFile =fopen(cAdresse, "r");
+	FILE *pfFile;
+	fopen_s(&pfFile,cAdresse, "r");
 
 	// Si erreur : Ouverture
 	if (pfFile == NULL)
@@ -56,11 +56,11 @@ CFichier::CFichier(char * cAdresse)
 	{
 		/* Step2 : Initialisation */
 		// Récupération des colonnes / lignes  / types
-		while (iValid == 1 && uiLigne <4 && fgets(cLine, MAX_LONGUEUR_LINE, pfFile) != NULL)
+		while (iValid == 1 && uiLigne <4 && fgets(pcLine, MAX_LONGUEUR_LINE, pfFile) != NULL)
 		{
 			
 			/* test de la balise */
-			if (FICStartWith(ppcTestBalise[uiLigne], cLine,iLongueurBal[uiLigne]))
+			if (FICStartWith(ppcTestBalise[uiLigne], pcLine,iLongueurBal[uiLigne]))
 			{
 				// balise invalide
 				iValid = 0;
@@ -77,13 +77,13 @@ CFichier::CFichier(char * cAdresse)
 				{
 					iPos1 = 0;
 					// Stockage des éléments
-					while (*(cLine+iPos+iPos1) != '\0' && iPos1 < MAX_LONGUEUR_LINE)
+					while (*(pcLine+iPos+iPos1) != '\0' && iPos1 < MAX_TAILLE_ARG)
 					{
-						pcArgType[iPos1] = *(cLine + iPos + iPos1);
+						pcArgType[iPos1] = pcLine[iPos + iPos1];
 						iPos1++;
 					}
 					// Si erreur : Type trop long
-					if (iPos1 == MAX_LONGUEUR_LINE)
+					if (iPos1 == MAX_TAILLE_ARG)
 					{
 						iValid = 0;
 						printf("Trop de caractère pour definir le type");
@@ -99,11 +99,11 @@ CFichier::CFichier(char * cAdresse)
 					/* balise NBLigne, NBColonne*/
 					if (uiLigne == 1)
 					{
-						iColonne = atoi(*(cLine + iPos));	// recup de la valeur
+						uiColonne = atoi((pcLine + iPos));	// recup de la valeur
 					}
 					if (uiLigne == 2)
 					{
-						iLigne = atoi(*(cLine+ iPos));	// recup de la valeur
+						iLigne = atoi((pcLine+ iPos));	// recup de la valeur
 					}
 				}
 			}
@@ -111,17 +111,38 @@ CFichier::CFichier(char * cAdresse)
 			
 		}
 		// Création de l'objet CMatrice	
+		if (FICStartWith("double", pcArgType, MAX_TAILLE_ARG) == 1)
+		{
+			MTPMatrice = new CMatrice<double>(uiColonne, iLigne);
+			/* Step3 : Remplissage */
+			// recupération de la ligne
 
-		/* Step3 : Remplissage */
-		// Remplissage case à case
+			// Remplissage case à case
 
-		// Si erreur : fichier fini avant la fin
+			// Si erreur : fichier fini avant la fin
 
-		// Si erreur : NaN
+			// Si erreur : NaN
 
-		// Si erreur : Syntax
+			// Si erreur : Syntax
+		}
+		// Si erreur : mauvais type
+		else
+		{
+			printf("mauvais type de matrice");
+			iValid = 0;
+		}
+		
 	}
-	
+	// fichier à problème
+	if (iValid == 0)
+	{
+		MTPMatrice = new CMatrice<double>();
+		cType = '\0';
+	}
+	else
+	{
+		fclose(pfFile);
+	}
 }
 void CFichier::FICAffiche_Contenu_Fich()
 {
