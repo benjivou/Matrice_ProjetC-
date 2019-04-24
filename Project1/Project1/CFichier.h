@@ -4,6 +4,7 @@
 */
 #include "CMatrice.h"
 #include <stdio.h>
+#include <stdbool.h> 
 
 #ifndef CFICHIER_H
 #define CFICHIER_H 
@@ -21,8 +22,8 @@ const char pcBaliseNbLignes[TAILLE_BALISE_NBLIGNES] = "NBLignes=";
 const char pcBaliseNbColonnes[TAILLE_BALISE_NBCOLONNES] = "NBColonnes=";
 const char pcBaliseMatrice[TAILLE_BALISE_MATRICE] = "Matrice=[";
 // regroupement
-const char ppcTestBalise[NB_BALISE][] = { pcBaliseType,pcBaliseNbLignes,pcBaliseNbColonnes,pcBaliseMatrice };
-
+const int iLongueurBal[NB_BALISE] = { TAILLE_BALISE_TYPE,TAILLE_BALISE_NBLIGNES,TAILLE_BALISE_NBCOLONNES,TAILLE_BALISE_MATRICE};
+const char *ppcTestBalise[NB_BALISE] = { pcBaliseType,pcBaliseNbLignes,pcBaliseNbColonnes,pcBaliseMatrice };
 class CFichier
 {
 public:
@@ -40,8 +41,11 @@ public:
 	void FICAffiche_Contenu_Fich();	// affiche le contenu de la matrice
 
 private:
+
 	CMatrice <double> *MTPMatrice;
 	char* cType;
+
+	int FICStartWith(const char* cPrefix, const char* cMot,int iLongueurPrefix);
 };
 
 #endif // !CFICHIER_H

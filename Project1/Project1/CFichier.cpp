@@ -1,5 +1,6 @@
 #include "CFichier.h"
 
+/* */
 /**
  *\brief Constructeur par défaut il sert simplement à éviter les problèmes de créations par défaut
  */
@@ -55,7 +56,7 @@ CFichier::CFichier(char * cAdresse)
 		{
 			iPos = 0;
 			/* test de la balise */
-			while (cLine[iPos] != '\0' && )
+			if (FICStartWith(ppcTestBalise[uiLigne], cLine,iLongueurBal[uiLigne]))
 			{
 
 			}
@@ -78,5 +79,29 @@ CFichier::CFichier(char * cAdresse)
 void CFichier::FICAffiche_Contenu_Fich()
 {
 
+}
+
+/**
+ *\brief fonction cacher pour tester les balises
+ *\param[in] cPrefx
+ *\param[in] cMot à comparer
+ *\param[out] 1 si c'est bon 0 sinon
+ */
+int CFichier::FICStartWith(const char * cPrefix, const char * cMot, int iLongueurPrefix)
+{
+	int iRes = 0;
+	int iPosition = 0;
+
+	while ( iPosition< iLongueurPrefix && cMot[iPosition] != '\0' && cPrefix[iPosition] == cMot[iPosition])
+	{
+		iPosition++;
+
+		if (iPosition == iLongueurPrefix -1)
+		{
+			iRes = 1;
+		}
+	}
+
+	return iRes;
 }
 
