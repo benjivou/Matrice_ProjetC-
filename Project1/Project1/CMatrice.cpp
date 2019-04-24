@@ -8,117 +8,77 @@
 template<class MType>
 CMatrice<MType>::CMatrice()
 {
-	uiMTPNbColonne = 0;
-	uiMTPNbLigne = 0;
+	uinbColonne = 0;
+	uinbLigne = 0;
 	ppMTPMatrice = nullptr;
 }
 
 template<class MType>
 CMatrice<MType>::CMatrice(unsigned int uiTaille)
 {
-	uiMTPNbColonne = uiTaille;
-	uiMTPNbLigne = uiTaille;
+	uinbColonne = uiTaille;
+	uinbLigne = uiTaille;
 	
-	ppMTPMatrice = new MType*[uiMTPNbLigne];
+	ppMTPMatrice = new MType*[uinbLigne];
 
-	for (unsigned int uiMTPBoucle = 0; uiMTPBoucle < uiMTPNbLigne; uiMTPBoucle++)
+	for (unsigned int iMTPBoucle1 = 0; iMTPBoucle1 < uinbLigne; iMTPBoucle1++)
 	{
-			ppMTPMatrice[uiMTPBoucle] = new MType[uiMTPNbColonne];
+			ppMTPMatrice[iMTPBoucle1] = new MType[uinbColonne];
 	}
 
-	for (unsigned int uiMTPBoucle = 0; uiMTPBoucle < uiMTPNbLigne; uiMTPBoucle++)
+	for (unsigned int iMTPBoucle = 0; iMTPBoucle < uinbLigne; iMTPBoucle++)
 	{
-		for (unsigned int uiMTPBoucle1 = 0; uiMTPBoucle1 < uiMTPNbColonne; uiMTPBoucle1++)
+		for (unsigned int jMTPBoucle = 0; jMTPBoucle < uinbColonne; jMTPBoucle++)
 		{
-			ppMTPMatrice[uiMTPBoucle][uiMTPBoucle1] = 0;
+			ppMTPMatrice[iMTPBoucle][jMTPBoucle] = 0;
 		}
 	}
 }
 
 template<class MType>
-CMatrice<MType>::CMatrice(unsigned int uiNbLigne, unsigned int uiNBCol)
+CMatrice<MType>::CMatrice(unsigned int uiNBLigne, unsigned int uiNBCol)
 {
-	uiMTPNbColonne = uiNBCol;
-	uiMTPNbLigne = uiNbLigne;
+	uinbColonne = uiNBCol;
+	uinbLigne = uiNBLigne;
 	
-	ppMTPMatrice = new MType*[uiMTPNbLigne];
+	ppMTPMatrice = new MType*[uinbLigne];
 
-	for (unsigned int uiMTPBoucle = 0; uiMTPBoucle < uiMTPNbLigne; uiMTPBoucle++)
+	for (unsigned int iMTPBoucle1 = 0; iMTPBoucle1 < uinbLigne; iMTPBoucle1++)
 	{
-		ppMTPMatrice[uiMTPBoucle] = new MType[uiMTPNbColonne];
+		ppMTPMatrice[iMTPBoucle1] = new MType[uinbColonne];
 	}
 
-	for (unsigned int uiMTPBoucle1 = 0; uiMTPBoucle1 < uiMTPNbLigne; uiMTPBoucle1++)
+	for (unsigned int iMTPBoucle = 0; iMTPBoucle < uinbLigne; iMTPBoucle++)
 	{
-		for (unsigned int uiMTPBoucle2 = 0; uiMTPBoucle2 < uiMTPNbColonne; uiMTPBoucle2++)
+		for (unsigned int jMTPBoucle = 0; jMTPBoucle < uinbColonne; jMTPBoucle++)
 		{
-			ppMTPMatrice[uiMTPBoucle1][uiMTPBoucle2] = 0;
+			ppMTPMatrice[iMTPBoucle][jMTPBoucle] = 0;
 		}
 	}
 }
 
 template<class MType>
-CMatrice<MType>::CMatrice(CMatrice<MType>& MTPParam)
+CMatrice<MType>::CMatrice(CMatrice<MType>& MTPP1)
 {
-	uiMTPNbColonne = MTPParam.uiMTPNbColonne;
-	uiMTPNbLigne = MTPParam.uiMTPNbLigne;
 
-	ppMTPMatrice = new MType*[uiMTPNbLigne];
-
-	for (unsigned int uiMTPBoucle2 = 0; uiMTPBoucle2 < uiMTPNbLigne; uiMTPBoucle2++)
-	{
-		ppMTPMatrice[uiMTPBoucle2] = new MType[uiMTPNbColonne];
-	}
-
-	for (unsigned int uiMTPBoucle = 0; uiMTPBoucle < uiMTPNbLigne; uiMTPBoucle++)
-	{
-		for (unsigned int uiMTPBoucle1 = 0; uiMTPBoucle1 < uiMTPNbColonne; uiMTPBoucle1++)
-		{
-			ppMTPMatrice[uiMTPBoucle][uiMTPBoucle1] = MTPParam.ppMTPMatrice[uiMTPBoucle][uiMTPBoucle1];
-		}
-	}
 }
 
 template<class MType>
 CMatrice<MType>::~CMatrice()
 {
-	//Ne fais rien
 }
 
 // Méthodes
 
 template<class MType>
-CMatrice<MType> & CMatrice<MType>::operator=(CMatrice<MType> &MTPParam)
-{
-	uiMTPNbColonne = MTPParam.uiMTPNbColonne;
-	uiMTPNbLigne = MTPParam.uiMTPNbLigne;
-
-	ppMTPMatrice = new MType*[uiMTPNbLigne];
-
-	for (unsigned int uiMTPBoucle2 = 0; uiMTPBoucle2 < uiMTPNbLigne; uiMTPBoucle2++)
-	{
-		ppMTPMatrice[uiMTPBoucle2] = new MType[uiMTPNbColonne];
-	}
-
-	for (unsigned int uiMTPBoucle = 0; uiMTPBoucle < uiMTPNbLigne; uiMTPBoucle++)
-	{
-		for (unsigned int uiMTPBoucle1 = 0; uiMTPBoucle1 < uiMTPNbColonne; uiMTPBoucle1++)
-		{
-			ppMTPMatrice[uiMTPBoucle][uiMTPBoucle1] = MTPParam.ppMTPMatrice[uiMTPBoucle][uiMTPBoucle1];
-		}
-	}
-	return *this;
-}
-
-template<class MType>
 void CMatrice<MType>::MTPAfficherMatrice()
 {
 	printf("Matrice : \n");
-	for (unsigned int uiMTPBoucle = 0; uiMTPBoucle < uiMTPNbLigne; uiMTPBoucle++)
+	for (unsigned int iMTPBoucle = 0; iMTPBoucle < uinbLigne; iMTPBoucle++)
 	{
-		for (unsigned int uiMTPBoucle1 = 0; uiMTPBoucle1 < uiMTPNbColonne; uiMTPBoucle1++)
+		for (unsigned int jMTPBoucle = 0; jMTPBoucle < uinbColonne; jMTPBoucle++)
 		{
-			printf(" %d ", ppMTPMatrice[uiMTPBoucle][uiMTPBoucle1]);
+			printf(" %d ",ppMTPMatrice[iMTPBoucle][jMTPBoucle]);
 		}
 		printf("\n");
 	}
@@ -126,14 +86,7 @@ void CMatrice<MType>::MTPAfficherMatrice()
 }
 
 template<class MType>
-void CMatrice<MType>::MTPViderMatrice()
+CMatrice<MType> & CMatrice<MType>::operator=(CMatrice<MType> &MTPParam)
 {
-	uiMTPNbColonne = 0;
-	uiMTPNbLigne = 0;
-	if (ppMTPMatrice)
-	{
-		for ( unsigned int uiMTPBoucle = 0; uiMTPBoucle < uiMTPNbLigne; uiMTPBoucle++)
-			delete[] ppMTPMatrice[uiMTPBoucle];
-		delete[] ppMTPMatrice;
-	}
+
 }
