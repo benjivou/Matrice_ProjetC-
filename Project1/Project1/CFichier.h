@@ -1,6 +1,6 @@
 /*	@brief Cette classe permet de récupérer 
 *	les informations du fichier et après les stocks
-*	dans une matrice
+*	dans une matrice et garde le type dans un attribut
 */
 #include "CMatrice.h"
 #ifndef CFICHIER_H
@@ -10,20 +10,20 @@ class CFichier
 {
 public:
 	CFichier();
-	CFichier(char* adr);
+	CFichier(char* adrcAdresse);
 	~CFichier();
 
 	// Getter 
-	CMatrice <double> *FICLire_MTMPMatrice() { return &MTPMatrice; };// inline
-	int FICLire_NbLigne() { return MTPMatrice.MTPLire_NbLigne(); } //inline
-	int FICLire_NbColonne() { return MTPMatrice.MTPLire_NbColonne(); } //inline
+	CMatrice <double> *FICLire_MTMPMatrice() { return MTPMatrice; };// inline
+	int FICLire_NbLigne() { return MTPMatrice->MTPLire_NbLigne(); } //inline
+	int FICLire_NbColonne() { return MTPMatrice->MTPLire_NbColonne(); } //inline
 	char* FICLire_Type() { return cType; }; // inline
 
 	// Afficheur
-	void FICAffiche_Contenu_Fich();
+	void FICAffiche_Contenu_Fich();	// affiche le contenu de la matrice
 
 private:
-	CMatrice <double> MTPMatrice;
+	CMatrice <double> *MTPMatrice;
 	char* cType;
 };
 
