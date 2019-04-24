@@ -64,22 +64,22 @@ CFichier::CFichier(char * cAdresse)
 			{
 				// balise invalide
 				iValid = 0;
-				printf("Syntaxe error: ' %d '", ppcTestBalise[uiLigne]);
+				printf("Syntaxe error: ' %s '", ppcTestBalise[uiLigne]);
 			}
 			/* Les balises sont bonnes */
 			else
 			{
 				// positionne le pointeur pour récupéré la valeur
-				iPos = ppcTestBalise[uiLigne];
+				iPos = iLongueurBal[uiLigne];
 
 				/* balise type */
 				if (uiLigne == 0)
 				{
 					iPos1 = 0;
 					// Stockage des éléments
-					while (*(ppcTestBalise[uiLigne]+iPos+iPos1) != '\0' && iPos1 < MAX_LONGUEUR_LINE)
+					while (*(cLine+iPos+iPos1) != '\0' && iPos1 < MAX_LONGUEUR_LINE)
 					{
-						pcArgType[iPos1] = *(ppcTestBalise[uiLigne] + iPos + iPos1);
+						pcArgType[iPos1] = *(cLine + iPos + iPos1);
 						iPos1++;
 					}
 					// Si erreur : Type trop long
@@ -97,9 +97,13 @@ CFichier::CFichier(char * cAdresse)
 				else
 				{
 					/* balise NBLigne, NBColonne*/
-					if (true)
+					if (uiLigne == 1)
 					{
-
+						iColonne = atoi(*(cLine + iPos));	// recup de la valeur
+					}
+					if (uiLigne == 2)
+					{
+						iLigne = atoi(*(cLine+ iPos));	// recup de la valeur
 					}
 				}
 			}
