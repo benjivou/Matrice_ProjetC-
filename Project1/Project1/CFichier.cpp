@@ -31,13 +31,17 @@ CFichier::~CFichier()
  */
 CFichier::CFichier(char * cAdresse)
 {
-	int iPos;						// position dns la ligne
+	int iPos;					
+	int iPos1;						// position dns la ligne
 	int iValid = 1;					// dit s'il y a une erreur
 	unsigned int uiLigne = 0;		// donne la ligne du fichier en cours d'étude
-	char cLine[MAX_LONGUEUR_LINE];	// représente la longueur des lignes avant la matrice
+	char cLine[MAX_LONGUEUR_LINE];	// ligne d'argument pour créer la matrice
 	char cCaractère;
 
-	char ppcArgumentsMatrice[4][MAX_TAILLE_ARG];
+	/* Variable nécessaire à la création de matrice*/
+	char* pcArgType[MAX_TAILLE_ARG];
+	unsigned int iColonne;
+	unsigned int iLigne;
 
 	/* Step1 : Ouverture du flux */
 	FILE *pfFile =fopen(cAdresse, "r");
@@ -54,11 +58,50 @@ CFichier::CFichier(char * cAdresse)
 		// Récupération des colonnes / lignes  / types
 		while (iValid == 1 && uiLigne <4 && fgets(cLine, MAX_LONGUEUR_LINE, pfFile) != NULL)
 		{
-			iPos = 0;
+			
 			/* test de la balise */
 			if (FICStartWith(ppcTestBalise[uiLigne], cLine,iLongueurBal[uiLigne]))
 			{
+				// balise invalide
+				iValid = 0;
+				printf("Syntaxe error: ' %d '", ppcTestBalise[uiLigne]);
+			}
+			/* Les balises sont bonnes */
+			else
+			{
+				// positionne le pointeur pour récupéré la valeur
+				iPos = ppcTestBalise[uiLigne];
 
+				/* balise type */
+				if (uiLigne == 0)
+				{
+					iPos1 = 0;
+					// Stockage des éléments
+					while (*(ppcTestBalise[uiLigne]+iPos+iPos1) != '\0' && iPos1 < MAX_LONGUEUR_LINE)
+					{
+						pcArgType[iPos1] = *(ppcTestBalise[uiLigne] + iPos + iPos1);
+						iPos1++;
+					}
+					// Si erreur : Type trop long
+					if (iPos1 == MAX_LONGUEUR_LINE)
+					{
+						iValid = 0;
+						printf("Trop de caractère pour definir le type");
+						iPos1--;
+					}
+					
+					
+					pcArgType[iPos1] = '\0'; // fermeture
+				}
+				/* balise restantes*/
+				else
+				{
+					/* balise NBLigne, NBColonne*/
+					if (true)
+					{
+
+					}
+				}
 			}
 			
 			
