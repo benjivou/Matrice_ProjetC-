@@ -30,23 +30,50 @@ CFichier::~CFichier()
  */
 CFichier::CFichier(char * cAdresse)
 {
+	int iPos;						// position dns la ligne
+	int iValid = 1;					// dit s'il y a une erreur
+	unsigned int uiLigne = 0;		// donne la ligne du fichier en cours d'étude
+	char cLine[MAX_LONGUEUR_LINE];	// représente la longueur des lignes avant la matrice
+	char cCaractère;
+
+	char ppcArgumentsMatrice[4][MAX_TAILLE_ARG];
+
 	/* Step1 : Ouverture du flux */
+	FILE *pfFile =fopen(cAdresse, "r");
 
 	// Si erreur : Ouverture
+	if (pfFile == NULL)
+	{
+		iValid = 0;
+		printf("Chemin invalid");
+	}
+	else
+	{
+		/* Step2 : Initialisation */
+		// Récupération des colonnes / lignes  / types
+		while (iValid == 1 && uiLigne <4 && fgets(cLine, MAX_LONGUEUR_LINE, pfFile) != NULL)
+		{
+			iPos = 0;
+			/* test de la balise */
+			while (cLine[iPos] != '\0' && )
+			{
 
-	/* Step2 : Iniialisation */
-	// Récupération des colonnes / lignes  / types
+			}
+			
+			
+		}
+		// Création de l'objet CMatrice	
 
-	// Création de l'objet CMatrice
+		/* Step3 : Remplissage */
+		// Remplissage case à case
 
-	/* Step3 : Remplissage */
-	// Remplissage case à case
+		// Si erreur : fichier fini avant la fin
 
-	// Si erreur : fichier fini
+		// Si erreur : NaN
 
-	// Si erreur : NaN
-
-	// Si erreur : Syntax
+		// Si erreur : Syntax
+	}
+	
 }
 void CFichier::FICAffiche_Contenu_Fich()
 {
