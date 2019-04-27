@@ -10,6 +10,11 @@
 #ifndef CMATRICE_H
 #define CMATRICE_H
 
+#include "CException.h"
+
+#define Nb_Ligne_Incorrect 1
+#define Nb_Colonne_Incorrect 2
+
 template <class MType>
 class CMatrice
 {
@@ -34,7 +39,7 @@ public:
 	//Méthodes
 
 	unsigned int MTPLire_Element(unsigned int uiNumLigne, unsigned int uiNumCol) { return ppMTPMatrice[uiNumLigne][uiNumCol]; } //inline
-	void MTPModifier_Element(unsigned int uiNumLigne, unsigned int uiNumCol , unsigned int uiElement) { ppMTPMatrice[uiNumLigne][uiNumCol] = uiElement; } //inline
+	void MTPModifier_Element(unsigned int uiNumLigne, unsigned int uiNumCol , MType uiElement) { ppMTPMatrice[uiNumLigne][uiNumCol] = uiElement; } //inline
 	unsigned int MTPLire_NbLigne() { return uiMTPNbLigne; } //inline
 	unsigned int MTPLire_NbColonne() { return uiMTPNbColonne; } //inline
 	

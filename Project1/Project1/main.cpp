@@ -13,6 +13,7 @@ int main()
 
 	CMatrice <int> MatriceEntier1(3,2);
 	CMatrice <int> MatriceEntier2(MatriceEntier1);
+	CMatrice <int> MatriceEntier3(3);
 
 	for (unsigned int i = 0; i < MatriceEntier1.MTPLire_NbLigne(); i++)
 	{

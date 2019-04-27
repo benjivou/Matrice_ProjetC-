@@ -19,6 +19,18 @@ CMatrice<MType>::CMatrice(unsigned int uiTaille)
 	uiMTPNbColonne = uiTaille;
 	uiMTPNbLigne = uiTaille;
 	
+	/*if (uiMTPNbColonne < 0)
+	{
+		CException EXCNbColErreur(Nb_Colonne_Incorrect);
+		throw EXCNbColErreur;
+	}
+
+	if (uiMTPNbLigne < 0)
+	{
+		CException EXCNbLigErreur(Nb_Ligne_Incorrect);
+		throw EXCNbLigErreur;
+	}*/
+
 	ppMTPMatrice = new MType*[uiMTPNbLigne];
 
 	for (unsigned int uiMTPBoucle = 0; uiMTPBoucle < uiMTPNbLigne; uiMTPBoucle++)
