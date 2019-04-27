@@ -10,27 +10,22 @@
 #ifndef CMATRICE_H
 #define CMATRICE_H
 
-#include "CException.h"
-
-#define Nb_Ligne_Incorrect 1
-#define Nb_Colonne_Incorrect 2
-
 template <class MType>
 class CMatrice
 {
 	//Attributs
 private : 
-	unsigned int uiMTPNbColonne;
-	unsigned int uiMTPNbLigne;
+	unsigned int uinbColonne;
+	unsigned int uinbLigne;
 	MType ** ppMTPMatrice; 
 
 	//Constructeurs et Destructeurs
 
 public:
 	CMatrice<MType>();
-	CMatrice<MType>(unsigned int uiTaille);
-	CMatrice<MType>(unsigned int uiNBLigne, unsigned int uiNBCol);
-	CMatrice<MType>(CMatrice<MType> & MTPParam);
+	CMatrice<MType>(unsigned int iTaille);
+	CMatrice<MType>(unsigned int iNBLigne, unsigned int iNBCol);
+	CMatrice<MType>(CMatrice<MType> & MTPP1);
 
 	~CMatrice<MType>();
 
@@ -38,12 +33,11 @@ public:
 
 	//Méthodes
 
-	unsigned int MTPLire_Element(unsigned int uiNumLigne, unsigned int uiNumCol) { return ppMTPMatrice[uiNumLigne][uiNumCol]; } //inline
-	void MTPModifier_Element(unsigned int uiNumLigne, unsigned int uiNumCol , MType uiElement) { ppMTPMatrice[uiNumLigne][uiNumCol] = uiElement; } //inline
-	unsigned int MTPLire_NbLigne() { return uiMTPNbLigne; } //inline
-	unsigned int MTPLire_NbColonne() { return uiMTPNbColonne; } //inline
-	
-	void MTPViderMatrice();
+	unsigned int MTPLire_Element(unsigned int iNumLigne, unsigned int iNumCol) { return ppMTPMatrice[iNumLigne][iNumCol]; } //inline
+	void MTPModifier_Element(unsigned int iNumLigne, unsigned int iNumCol , MType iElement) { ppMTPMatrice[iNumLigne][iNumCol] = iElement; } //inline
+	unsigned int MTPLire_NbLigne() { return uinbLigne; } //inline
+	unsigned int MTPLire_NbColonne() { return uinbColonne; } //inline
+
 	void MTPAfficherMatrice();
 
 };

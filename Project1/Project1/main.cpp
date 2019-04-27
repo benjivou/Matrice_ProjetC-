@@ -7,29 +7,24 @@
 #include <iostream>
 
 
+
 int main()
 {
 	printf("Hello World!\n");
 
 	CMatrice <int> MatriceEntier1(3,2);
-	CMatrice <int> MatriceEntier2(MatriceEntier1);
-	CMatrice <int> MatriceEntier3(3);
 
-	for (unsigned int i = 0; i < MatriceEntier1.MTPLire_NbLigne(); i++)
+	/*for (unsigned int i = 0; i < MatriceEntier1.MTPLire_NbLigne(); i++)
 	{
 		for (unsigned int j = 0; j < MatriceEntier1.MTPLire_NbColonne(); j++)
 		{
 			MatriceEntier1.MTPModifier_Element(i, j, i);
 		}
-	}
+	}*/
 
 	MatriceEntier1.MTPAfficherMatrice();
-	MatriceEntier2.MTPAfficherMatrice();
 
-	MatriceEntier1.MTPViderMatrice();
-	MatriceEntier2.MTPViderMatrice();
 
-	//printf("\n %d", MatriceEntier1.MTPLire_NbColonne());
 
 	getchar();
 	return 0;
