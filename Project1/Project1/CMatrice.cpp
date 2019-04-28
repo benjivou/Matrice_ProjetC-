@@ -1,4 +1,4 @@
-// CMatrice.cpp : fichier source correspondant à l'en-tête précompilé ; nécessaire au bon déroulement de la compilation
+// CMatrice.cpp : fichier source correspondant à l'en-tête précompilé ; nécessaire au bon déroulement de la compilation
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -118,7 +118,7 @@ void CMatrice<MType>::MTPAfficherMatrice()
 	{
 		for (unsigned int uiMTPBoucle1 = 0; uiMTPBoucle1 < uiMTPNbColonne; uiMTPBoucle1++)
 		{
-			printf(" %d ", ppMTPMatrice[uiMTPBoucle][uiMTPBoucle1]);
+			printf(" %f ", (double)ppMTPMatrice[uiMTPBoucle][uiMTPBoucle1]);
 		}
 		printf("\n");
 	}

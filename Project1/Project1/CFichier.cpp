@@ -1,4 +1,4 @@
-#include "CFichier.h"
+
 
 /* */
 /**
@@ -7,7 +7,7 @@
 CFichier::CFichier()
 {
 	MTPMatrice = nullptr;
-	cType = '\0';
+	pcType = (char*) "";
 }
 
 
@@ -17,7 +17,7 @@ CFichier::CFichier()
 CFichier::~CFichier()
 {
 	// s'il y a une CMatrice allouée dynamiquement
-	if (*cType != '\0')
+	if (*pcType != '\0')
 	{
 		delete MTPMatrice;
 	}
@@ -31,6 +31,7 @@ CFichier::~CFichier()
  */
 CFichier::CFichier(char * cAdresse)
 {
+	unsigned int uiPosLigne;
 	int iPos;
 	int iPos1;						// position dns la ligne
 	int iValid = 1;					// dit s'il y a une erreur
@@ -113,16 +114,19 @@ CFichier::CFichier(char * cAdresse)
 		// Création de l'objet CMatrice
 		if (FICStartWith("double", pcArgType, MAX_TAILLE_ARG) == 1)
 		{
+			uiPosLigne = 0;
+
 			MTPMatrice = new CMatrice<double>(uiColonne, iLigne);
 			/* Step3 : Remplissage */
 			// recupération de la ligne
-
-			// Remplissage case à case
-
+			while (uiPosLigne < iLigne && fgets(pcLine, MAX_LONGUEUR_LINE, pfFile) != NULL && *pcLine != ']')
+			{
+				// Remplissage case à case
+				FICStocke_Ligne_Dans_Matrice(pcLine, MTPMatrice, uiPosLigne);
+				uiPosLigne++;		// il reste à récupérer une ligne de moins
+			}
 			// Si erreur : fichier fini avant la fin
-
 			// Si erreur : NaN
-
 			// Si erreur : Syntax
 		}
 		// Si erreur : mauvais type
@@ -137,7 +141,7 @@ CFichier::CFichier(char * cAdresse)
 	if (iValid == 0)
 	{
 		MTPMatrice = new CMatrice<double>();
-		cType = '\0';
+		pcType = '\0';
 	}
 	else
 	{
@@ -146,7 +150,27 @@ CFichier::CFichier(char * cAdresse)
 }
 void CFichier::FICAffiche_Contenu_Fich()
 {
+	MTPMatrice->MTPAfficherMatrice();
+	printf(" Son type est : %s ", pcType);
+}
 
+/*
+ *\brief trouve la première occurrence de cSeparateur dansla pcLigne
+ *\param[out] pointeur sur la nouvelle occurrence, sinon pointeur nullptr
+ */
+char * CFichier::FICFindFirstChar(char * pcLigne, char cSeparateur)
+{
+	int iCurseur = 0;
+	while (pcLigne[iCurseur] != '\0')
+	{
+
+		if (pcLigne[iCurseur] == cSeparateur)
+		{
+			return pcLigne + iCurseur;
+		}
+		iCurseur++;
+	}
+	return nullptr;
 }
 
 /**
@@ -171,4 +195,27 @@ int CFichier::FICStartWith(const char * cPrefix, const char * cMot, int iLongueu
 	}
 
 	return iRes;
+}
+
+/**
+ *\brief rempli la matrice du CFichier avec une ligne d'élément
+ */
+
+int CFichier::FICStocke_Ligne_Dans_Matrice(char* pcLigne, CMatrice<double>* pmStockage, unsigned int uiCurrentLigne)
+{
+	unsigned int uiCurrentColonne = 0;
+	char *pcCurrent;	// pointeur sur la derniere occurence du ' '
+	pcCurrent = FICFindFirstChar(pcLigne, ' ');
+
+	while (pcCurrent != nullptr)
+	{
+		*pcCurrent = '\0';
+		MTPMatrice->MTPModifier_Element(uiCurrentLigne, uiCurrentColonne, atof(pcLigne));	// remplissage de la matrice
+		pcLigne = pcCurrent + 1;															// déplace le pointeur
+		pcCurrent = FICFindFirstChar(pcLigne, ' ');
+		uiCurrentColonne++;
+	}
+	MTPMatrice->MTPModifier_Element(uiCurrentLigne, uiCurrentColonne, atof(pcLigne));	// dernier élément
+
+	return 0;
 }

@@ -7,6 +7,7 @@
 #include <stdbool.h> 
 #include <stdlib.h>
 #include <string.h>
+
 #ifndef CFICHIER_H
 #define CFICHIER_H 
 #define MAX_LONGUEUR_LINE 6
@@ -25,6 +26,7 @@ const char pcBaliseMatrice[TAILLE_BALISE_MATRICE] = "Matrice=[";
 // regroupement
 const int iLongueurBal[NB_BALISE] = { TAILLE_BALISE_TYPE,TAILLE_BALISE_NBLIGNES,TAILLE_BALISE_NBCOLONNES,TAILLE_BALISE_MATRICE };
 const char *ppcTestBalise[NB_BALISE] = { pcBaliseType,pcBaliseNbLignes,pcBaliseNbColonnes,pcBaliseMatrice };
+
 class CFichier
 {
 public:
@@ -36,7 +38,7 @@ public:
 	CMatrice <double> *FICLire_MTMPMatrice() { return MTPMatrice; };// inline
 	int FICLire_NbLigne() { return MTPMatrice->MTPLire_NbLigne(); } //inline
 	int FICLire_NbColonne() { return MTPMatrice->MTPLire_NbColonne(); } //inline
-	char* FICLire_Type() { return cType; }; // inline
+	char* FICLire_Type() { return pcType; }; // inline
 
 	// Afficheur
 	void FICAffiche_Contenu_Fich();	// affiche le contenu de la matrice
@@ -44,9 +46,10 @@ public:
 private:
 
 	CMatrice <double> *MTPMatrice;
-	char* cType;
-
+	char* pcType;
+	char* FICFindFirstChar(char * pcLigne, char cSeparateur);
 	int FICStartWith(const char* cPrefix, const char* cMot, int iLongueurPrefix);
+	int FICStocke_Ligne_Dans_Matrice(char* pcLigne, CMatrice<double> *pmStockage, unsigned int uiCurrentLigne);
 };
-
+#include "CFichier.cpp"
 #endif // !CFICHIER_H
