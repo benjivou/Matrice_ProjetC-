@@ -1,6 +1,6 @@
-// main.cpp : Ce fichier contient la fonction 'main'. L'exécution du programme commence et se termine à cet endroit.
-// Exécuter le programme : Ctrl+F5 ou menu Déboguer > Exécuter sans débogage
-// Déboguer le programme : F5 ou menu Déboguer > Démarrer le débogage
+// main.cpp : Ce fichier contient la fonction 'main'. L'exï¿½cution du programme commence et se termine ï¿½ cet endroit.
+// Exï¿½cuter le programme : Ctrl+F5 ou menu Dï¿½boguer > Exï¿½cuter sans dï¿½bogage
+// Dï¿½boguer le programme : F5 ou menu Dï¿½boguer > Dï¿½marrer le dï¿½bogage
 
 #include "CFichier.h"
 
@@ -22,7 +22,7 @@ int main()
 		}
 	}
 
-	
+
 	MatriceEntier1.MTPAfficherMatrice();
 	MatriceEntier2.MTPAfficherMatrice();
 
@@ -31,6 +31,13 @@ int main()
 
 	//printf("\n %d", MatriceEntier1.MTPLire_NbColonne());
 
+	printf("TEst des CFichier\n");
+	//CFichier Fichier_Erreur("CFichier.cpp");
+	CFichier Fichier0("Matrice_Qui_n'existe_pas.JcpOuT");
+	CFichier Fichier2("CFichier.cpp");
+	// cas qui marche
+	CFichier Fichier1("Test/Matrice_Valide.txt");
+	Fichier1.FICAffiche_Contenu_Fich();
 	getchar();
 	return 0;
 }

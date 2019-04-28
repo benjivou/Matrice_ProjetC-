@@ -10,7 +10,7 @@
 
 #ifndef CFICHIER_H
 #define CFICHIER_H 
-#define MAX_LONGUEUR_LINE 6
+#define MAX_LONGUEUR_LINE 80
 #define MAX_TAILLE_ARG 7		// nombre de caractère dans 1 argument du fichier
 /* Initialisation des balises à trouver dans le fichier */
 #define NB_BALISE 4
@@ -31,7 +31,7 @@ class CFichier
 {
 public:
 	CFichier();
-	CFichier(char* adrcAdresse);
+	CFichier(const char* adrcAdresse);
 	~CFichier();
 
 	// Getter 
@@ -46,9 +46,11 @@ public:
 private:
 
 	CMatrice <double> *MTPMatrice;
-	char* pcType;
+	char pcType[MAX_TAILLE_ARG];
+
 	char* FICFindFirstChar(char * pcLigne, char cSeparateur);
 	int FICStartWith(const char* cPrefix, const char* cMot, int iLongueurPrefix);
+	int FICCopieString(char *pcSrc, char* pcDest);
 	int FICStocke_Ligne_Dans_Matrice(char* pcLigne, CMatrice<double> *pmStockage, unsigned int uiCurrentLigne);
 };
 #include "CFichier.cpp"
