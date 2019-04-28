@@ -4,7 +4,7 @@
 class CException
 {
 
-private : 
+private:
 	unsigned int uiEXCErreur;
 
 public:
