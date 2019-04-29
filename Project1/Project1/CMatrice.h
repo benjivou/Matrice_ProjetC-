@@ -32,7 +32,7 @@ public:
 
 	//Méthodes
 
-	unsigned int MTPLire_Element(unsigned int uiNumLigne, unsigned int uiNumCol) { return ppMTPMatrice[uiNumLigne][uiNumCol]; } //inline
+	MType MTPLire_Element(unsigned int uiNumLigne, unsigned int uiNumCol) { return ppMTPMatrice[uiNumLigne][uiNumCol]; } //inline
 	void MTPModifier_Element(unsigned int uiNumLigne, unsigned int uiNumCol, MType uiElement) { ppMTPMatrice[uiNumLigne][uiNumCol] = uiElement; } //inline
 	unsigned int MTPLire_NbLigne() { return uiMTPNbLigne; } //inline
 	unsigned int MTPLire_NbColonne() { return uiMTPNbColonne; } //inline
