@@ -50,7 +50,7 @@ CFichier::CFichier(const char * cAdresse)
 	fopen_s(&pfFile, cAdresse, "r");
 
 	// Si erreur : Ouverture
-	if (pfFile == NULL)
+	if (pfFile == nullptr)
 	{
 		iValid = 0;
 		printf("Chemin invalid\n");

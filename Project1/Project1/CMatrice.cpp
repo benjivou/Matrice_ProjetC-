@@ -111,6 +111,30 @@ CMatrice<MType> & CMatrice<MType>::operator=(CMatrice<MType> &MTPParam)
 }
 
 template<class MType>
+ CMatrice<MType> & CMatrice<MType>::operator+(CMatrice<MType> &MTPParam) 
+{
+	 uiMTPNbColonne = MTPParam.uiMTPNbColonne;
+	 uiMTPNbLigne = MTPParam.uiMTPNbLigne;
+
+	 CMatrice <MType> MatriceResultat(uiMTPNbLigne,uiMTPNbColonne)
+	 MatriceResultatppMTPMatrice = new MType*[uiMTPNbLigne];
+
+	 for (unsigned int uiMTPBoucle2 = 0; uiMTPBoucle2 < uiMTPNbLigne; uiMTPBoucle2++)
+	 {
+		 ppMTPMatrice[uiMTPBoucle2] = new MType[uiMTPNbColonne];
+	 }
+
+	 for (unsigned int uiMTPBoucle = 0; uiMTPBoucle < uiMTPNbLigne; uiMTPBoucle++)
+	 {
+		 for (unsigned int uiMTPBoucle1 = 0; uiMTPBoucle1 < uiMTPNbColonne; uiMTPBoucle1++)
+		 {
+			 ppMTPMatrice[uiMTPBoucle][uiMTPBoucle1] = MTPParam.ppMTPMatrice[uiMTPBoucle][uiMTPBoucle1];
+		 }
+	 }
+	 return *this;
+}
+
+template<class MType>
 void CMatrice<MType>::MTPAfficherMatrice()
 {
 	printf("Matrice : \n");
