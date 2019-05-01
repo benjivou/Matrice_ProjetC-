@@ -21,6 +21,11 @@ CMatrice<double> COperator::OPETranspose_Matrice(CMatrice<double> matElement)
 
 CMatrice<double> COperator::OPEDivision_Externe(CMatrice<double> matElement, double dDiviseur)
 {
+	if (dDiviseur == 0)
+	{
+		CException EXCDenNul(Denominateur_Nul_Erreur);
+		throw EXCDenNul;
+	}
 	for (size_t iLigneElement = 0; iLigneElement < matElement.MTPLire_NbLigne(); iLigneElement++)
 	{
 		for (size_t iColonneElement = 0; iColonneElement < matElement.MTPLire_NbColonne(); iColonneElement++)

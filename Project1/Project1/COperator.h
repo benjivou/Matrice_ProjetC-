@@ -3,6 +3,8 @@
 #define	COPERATOR
 #include "CMatrice.h"
 
+#define Denominateur_Nul_Erreur 5
+
 class COperator
 {
 public:
