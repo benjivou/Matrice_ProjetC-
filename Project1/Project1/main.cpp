@@ -4,63 +4,116 @@
 
 #include "CFichier.h"
 #include "COperator.h"
-#include "CException.h"
+#include <iostream>
+#include <stdlib.h>
+#include <cstdio>
 
 
-using namespace std;
-
-int main()
+int main(int argc, char *argv[]
+)
 {
-	printf("Hello World!\n");
-	try {
+	double dSaisieUtilisateur = -1.0;
+	unsigned int uiNbMatriceValide = 0;
+	CMatrice<double>* pmatBuffer;
 
-		
+	// Si erreur : pas de paramètre 
+	if (argc > 0)
+	{
+		/* Etape 1 : recupération des paramèrtres */
+		CMatrice<double> **ppmatEntree = (CMatrice<double>**)malloc(sizeof(void*) * argc);	// Stockage des pointeurs de Matrice en entée
 
-		CMatrice <double> MatriceEntier1(3);
-		CMatrice <double> MatriceEntier3(3);
-		CMatrice <double> MatriceEntier2(MatriceEntier1);
-
-		for (unsigned int i = 0; i < MatriceEntier1.MTPLire_NbLigne(); i++)
+		// recupération / génération
+		for (int iPosition_Entre = 1; iPosition_Entre <= argc; iPosition_Entre++)
 		{
-			for (unsigned int j = 0; j < MatriceEntier1.MTPLire_NbColonne(); j++)
+
+			try
 			{
-				MatriceEntier1.MTPModifier_Element(i, j, (double)j + 4);
-				MatriceEntier3.MTPModifier_Element(i, j, (double)3 * i);
+				printf("chemin du fichier : %s \n", argv[iPosition_Entre]);
+				ppmatEntree[uiNbMatriceValide] = CFichier(argv[iPosition_Entre]).FICLire_MTMPMatrice();
+				ppmatEntree[uiNbMatriceValide]->MTPAfficherMatrice();
+				uiNbMatriceValide++;
 			}
+			catch (const std::exception&)
+			{
+				std::cout << "erreur intialisation de la matrice :" << iPosition_Entre << '\n';
+			}
+
+		}
+		printf("Generation réussite\n");
+
+		/* Etape 2 : Saisie de L'utilisateur */
+		// Recupération
+		while (dSaisieUtilisateur < 0.0)
+		{
+			std::cout << "Saisir un valeur pour la division des matrices :\n";
+			try
+			{
+				std::cin >> dSaisieUtilisateur;
+			}
+			catch (const std::exception&)
+			{
+				dSaisieUtilisateur = -1.0;
+				std::cout << "Une valeur strictement positive est plus à propos dans cette situation\n";
+			}
+
+		}
+		std::cout << "Saisie réussite\n";
+
+		/* Step 3 : Operations externes */
+
+		// Multiplication
+		for (size_t iPosition_Matrice = 0; iPosition_Matrice < uiNbMatriceValide; iPosition_Matrice++)
+		{
+			try
+			{
+				COperator<double>::OPEMultiplication_Externe(ppmatEntree[iPosition_Matrice][0], dSaisieUtilisateur).MTPAfficherMatrice();
+			}
+			catch (const std::exception&)
+			{
+				std::cout << "Probléme de Multiplication sur la matrice numéro : " << iPosition_Matrice << '\n';
+			}
+
+		}
+		std::cout << "Test de Multiplication terminé\n";
+
+		// Division
+		for (size_t iPosition_Matrice = 0; iPosition_Matrice < uiNbMatriceValide; iPosition_Matrice++)
+		{
+			try
+			{
+				COperator<double>::OPEDivision_Externe(ppmatEntree[iPosition_Matrice][0], dSaisieUtilisateur).MTPAfficherMatrice();
+			}
+			catch (const std::exception&)
+			{
+				std::cout << "Probléme de Division sur la matrice numéro : " << iPosition_Matrice << '\n';
+			}
+
 		}
 
-		MatriceEntier2 = MatriceEntier3 - MatriceEntier1;
+		std::cout << "Test de division terminé\n";
 
-		MatriceEntier1.MTPAfficherMatrice();
-		MatriceEntier2.MTPAfficherMatrice();
-		MatriceEntier3.MTPAfficherMatrice();
+		/* Step 4 : Operations internes */
+		// Addition
+		for (size_t iPosition_Matrice = 0; iPosition_Matrice < uiNbMatriceValide; iPosition_Matrice++)
+		{
+			try
+			{
+				// allocation d'une matrice
+				pmatBuffer = new CMatrice<double>(ppmatEntree[iPosition_Matrice][0]);
 
-		// Test Coperator 
-		printf("Test COperator\n");
+				COperator<double>::OPEDivision_Externe(ppmatEntree[iPosition_Matrice][0], dSaisieUtilisateur).MTPAfficherMatrice();
+			}
+			catch (const std::exception&)
+			{
+				std::cout << "Probléme de Division sur la matrice numéro : " << iPosition_Matrice << '\n';
+			}
 
-
-		COperator::OPETranspose_Matrice(MatriceEntier1).MTPAfficherMatrice();
-		COperator::OPEDivision_Externe(MatriceEntier1, 3.0).MTPAfficherMatrice();
-		COperator::OPEMultiplication_Externe(MatriceEntier1, 3.0).MTPAfficherMatrice();
-
-
-		//printf("\n %d", MatriceEntier1.MTPLire_NbColonne());
-
-
-
-		printf("TEst des CFichier\n");
-
-		CFichier Fichier0("Matrice_Qui_n'existe_pas.JcpOuT");
-		CFichier Fichier2("CFichier.cpp");
-		// cas qui marche
-		CFichier Fichier1("Test/Matrice_Valide.txt");
-		Fichier1.FICAffiche_Contenu_Fich();
-		
-
+		}
+		/* Step final : Vidange memoire*/
+		free(ppmatEntree);
 	}
-	catch (CException EXCException) {
-		EXCException.EXCAfficherErreur();
-	}
+
+
 	getchar();
 	return 0;
 }
