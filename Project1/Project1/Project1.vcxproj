@@ -118,9 +118,11 @@
     <ClInclude Include="CException.h" />
     <ClInclude Include="CFichier.h" />
     <ClInclude Include="CMatrice.h" />
+    <ClInclude Include="COperator.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CException.cpp" />
+    <ClCompile Include="COperator.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
