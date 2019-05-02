@@ -15,8 +15,6 @@
 #define Nb_Colonne_Ligne_Diff_Sub_Erreur 3
 #define Nb_Colonne_Ligne_Diff_Mult_Erreur 4
 
-
-
 template <class MType>
 class CMatrice
 {

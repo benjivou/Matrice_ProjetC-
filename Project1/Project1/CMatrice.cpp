@@ -7,7 +7,7 @@ using namespace std;
 //Constructeurs et destructeurs
 
 /**
- *\brief ne fait rien car on détruit le CFichier indépendemment du CMatrice
+ *\brief : Constructeur par défaut d'une matrice 
  */
 template<class MType>
 CMatrice<MType>::CMatrice()
@@ -18,13 +18,10 @@ CMatrice<MType>::CMatrice()
 }
 
 /**
- *\brief On lui passe en paramètre un chemin d'accés à un fichier, génére une matrice avec les informations du fichier
- *\param[in] cAdresse c'est le chemin d'accés au fichier cible
- *\return un objet CFichier, initialiser avec CFichier() si probléme ou vide
- * sinon c'est un Cfichier avec les bonnes valeurs
+ *\brief : Constructeur par défaut qui initialise une matrice carrée
+ *\param : uiTaille : La taille de la matrice à initialiser
+ *\post condition : Ne pas initialiser avec une taille négatif ou égale à 0
  */
-
- ////////////////////PostCond :Ne pas mettre de taille négatif
 template<class MType>
 CMatrice<MType>::CMatrice(unsigned int uiTaille)
 {
@@ -52,7 +49,12 @@ CMatrice<MType>::CMatrice(unsigned int uiTaille)
 	}
 }
 
-////////////////////PostCond :Ne pas mettre de taille négatif
+/**
+ *\brief : Constructeur par défaut qui initialise une matrice de taille souhaitée
+ *\param : uiNbLigne : La taille de la ligne de la matrice à initialiser
+ *		   uiNBCol : La taille de la colonne de la matrice à initialiser
+ *\post condition : Ne pas initialiser avec une taille négatif ou égale à 0
+ */
 template<class MType>
 CMatrice<MType>::CMatrice(unsigned int uiNbLigne, unsigned int uiNBCol)
 {
@@ -82,6 +84,10 @@ CMatrice<MType>::CMatrice(unsigned int uiNbLigne, unsigned int uiNBCol)
 	}
 }
 
+/**
+ *\brief : Constructeur de recopie qui initialise une matrice de taille de la matrice passée en paramètre
+ *\param : MTPParam : La matrice dont on recopie la taille et les éléments
+ */
 template<class MType>
 CMatrice<MType>::CMatrice(CMatrice<MType>& MTPParam)
 {
@@ -104,6 +110,9 @@ CMatrice<MType>::CMatrice(CMatrice<MType>& MTPParam)
 	}
 }
 
+/**
+ *\brief : Destructeur d'une matrice qui vide la matrice avant de la supprimer
+ */
 template<class MType>
 CMatrice<MType>::~CMatrice()
 {
@@ -119,6 +128,10 @@ CMatrice<MType>::~CMatrice()
 
 // Méthodes
 
+/**
+ *\brief : Surcharge de l'opérateur d'affectation qui facilite la recopie d'une matrice dans une autre
+ *\param : MTPParam : La matrice dont on recopie la taille et les éléments
+ */
 template<class MType>
 CMatrice<MType> & CMatrice<MType>::operator=(CMatrice<MType> &MTPParam)
 {
@@ -142,6 +155,11 @@ CMatrice<MType> & CMatrice<MType>::operator=(CMatrice<MType> &MTPParam)
 	return *this;
 }
 
+/**
+ *\brief : Surcharge de l'opérateur + qui facilite l'addition de deux matrices
+ *\param : MTPParam :La matrice à droite de l'addition 
+ *\return : MTPMatriceResultat : La matrice résultat de l'opération
+ */
 template<class MType>
 CMatrice<MType> & CMatrice<MType>::operator+(CMatrice<MType> &MTPParam)
 {
@@ -150,14 +168,9 @@ CMatrice<MType> & CMatrice<MType>::operator+(CMatrice<MType> &MTPParam)
 		CException EXCNbLigColDiff(Nb_Colonne_Ligne_Diff_Add_Erreur);
 		throw EXCNbLigColDiff;
 	}
+
 	CMatrice <MType> *MTPMatriceResultat = new CMatrice<MType>(uiMTPNbLigne, uiMTPNbColonne);
 
-	MTPMatriceResultat->ppMTPMatrice = new MType*[uiMTPNbLigne];
-
-	for (unsigned int uiMTPBoucle2 = 0; uiMTPBoucle2 < uiMTPNbLigne; uiMTPBoucle2++)
-	{
-		MTPMatriceResultat->ppMTPMatrice[uiMTPBoucle2] = new MType[uiMTPNbColonne];
-	}
 
 	for (unsigned int uiMTPBoucle = 0; uiMTPBoucle < uiMTPNbLigne; uiMTPBoucle++)
 	{
@@ -169,6 +182,11 @@ CMatrice<MType> & CMatrice<MType>::operator+(CMatrice<MType> &MTPParam)
 	return *MTPMatriceResultat;
 }
 
+/**
+ *\brief : Surcharge de l'opérateur - qui facilite la soustraction de deux matrices
+ *\param : MTPParam :La matrice à droite de la soustraction
+ *\return : MTPMatriceResultat : La matrice résultat de l'opération
+ */
 template<class MType>
 CMatrice<MType> & CMatrice<MType>::operator-(CMatrice<MType> &MTPParam)
 {
@@ -179,13 +197,6 @@ CMatrice<MType> & CMatrice<MType>::operator-(CMatrice<MType> &MTPParam)
 	}
 
 	CMatrice <MType> *MTPMatriceResultat = new CMatrice<MType>(uiMTPNbLigne, uiMTPNbColonne);
-
-	MTPMatriceResultat->ppMTPMatrice = new MType*[uiMTPNbLigne];
-
-	for (unsigned int uiMTPBoucle2 = 0; uiMTPBoucle2 < uiMTPNbLigne; uiMTPBoucle2++)
-	{
-		MTPMatriceResultat->ppMTPMatrice[uiMTPBoucle2] = new MType[uiMTPNbColonne];
-	}
 
 	for (unsigned int uiMTPBoucle = 0; uiMTPBoucle < uiMTPNbLigne; uiMTPBoucle++)
 	{
@@ -198,6 +209,11 @@ CMatrice<MType> & CMatrice<MType>::operator-(CMatrice<MType> &MTPParam)
 
 }
 
+/**
+ *\brief : Surcharge de l'opérateur * qui facilite la multiplication de deux matrices
+ *\param : MTPParam :La matrice à droite de la multiplication
+ *\return : MTPMatriceResultat : La matrice résultat de l'opération
+ */
 template<class MType>
 CMatrice<MType> & CMatrice<MType>::operator*(CMatrice<MType> &MTPParam)
 {
@@ -207,13 +223,6 @@ CMatrice<MType> & CMatrice<MType>::operator*(CMatrice<MType> &MTPParam)
 		throw EXCNbLigColDiff;
 	}
 	CMatrice <MType> *MTPMatriceResultat = new CMatrice<MType>(uiMTPNbLigne, uiMTPNbColonne);
-
-	MTPMatriceResultat->ppMTPMatrice = new MType*[uiMTPNbLigne];
-
-	for (unsigned int uiMTPBoucle2 = 0; uiMTPBoucle2 < uiMTPNbLigne; uiMTPBoucle2++)
-	{
-		MTPMatriceResultat->ppMTPMatrice[uiMTPBoucle2] = new MType[MTPParam.MTPLire_NbColonne()];
-	}
 
 	for (unsigned int uiMTPBoucle = 0; uiMTPBoucle < uiMTPNbLigne; uiMTPBoucle++)
 	{
@@ -228,6 +237,9 @@ CMatrice<MType> & CMatrice<MType>::operator*(CMatrice<MType> &MTPParam)
 	return *MTPMatriceResultat;
 }
 
+/**
+ *\brief : Affiche les éléments de la matrice courante
+ */
 template<class MType>
 void CMatrice<MType>::MTPAfficherMatrice()
 {
@@ -242,4 +254,3 @@ void CMatrice<MType>::MTPAfficherMatrice()
 	}
 	cout << endl;
 }
-
