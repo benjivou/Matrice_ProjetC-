@@ -51,19 +51,19 @@ CMatrice<MType> COperator<MType>::OPEMultiplication_Externe(CMatrice<MType> matE
 }
 
 template <class MType>
-CMatrice<MType> COperator<MType>::OPEMultiplication_Matrice(CMatrice<MType> matElement1, CMatrice<MType> matElement2)
+CMatrice<MType> &COperator<MType>::OPEMultiplication_Matrice(CMatrice<MType> matElement1, CMatrice<MType> matElement2)
 {
 	return (matElement1 * matElement2);
 }
 
 template <class MType>
-CMatrice<MType> COperator<MType>::OPEAddition_Matrice(CMatrice<MType> matElement1, CMatrice<MType> matElement2)
+CMatrice<MType> &COperator<MType>::OPEAddition_Matrice(CMatrice<MType> matElement1, CMatrice<MType> matElement2)
 {
 	return (matElement1 + matElement2);
 }
 
 template <class MType>
-CMatrice<MType> COperator<MType>::OPESoustraction_Matrice(CMatrice<MType> matElement1, CMatrice<MType> matElement2)
+CMatrice<MType> &COperator<MType>::OPESoustraction_Matrice(CMatrice<MType> matElement1, CMatrice<MType> matElement2)
 {
 	return (matElement1 - matElement2);
 }

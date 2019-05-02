@@ -194,7 +194,7 @@ CMatrice<MType> & CMatrice<MType>::operator-(CMatrice<MType> &MTPParam)
 			MTPMatriceResultat->ppMTPMatrice[uiMTPBoucle][uiMTPBoucle1] = ppMTPMatrice[uiMTPBoucle][uiMTPBoucle1] - MTPParam.ppMTPMatrice[uiMTPBoucle][uiMTPBoucle1];
 		}
 	}
-	return MTPMatriceResultat;
+	return *MTPMatriceResultat;
 
 }
 
@@ -225,7 +225,7 @@ CMatrice<MType> & CMatrice<MType>::operator*(CMatrice<MType> &MTPParam)
 			}
 		}
 	}
-	return MTPMatriceResultat;
+	return *MTPMatriceResultat;
 }
 
 template<class MType>

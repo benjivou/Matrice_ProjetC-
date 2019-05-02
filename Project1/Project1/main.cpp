@@ -11,7 +11,6 @@ using namespace std;
 
 int main()
 {
-	printf("Hello World!\n");
 	try {
 		CMatrice <double> MatriceEntier1(3);
 		CMatrice <double> MatriceEntier3(3);
@@ -38,11 +37,13 @@ int main()
 		printf("Test COperator\n");
 
 
-		/*COperator::OPETranspose_Matrice(MatriceEntier1).MTPAfficherMatrice();
-		COperator::OPEDivision_Externe(MatriceEntier1, 3.0).MTPAfficherMatrice();
-		COperator::OPEMultiplication_Externe(MatriceEntier1, 3.0).MTPAfficherMatrice();*/
+		COperator<double>::OPETranspose_Matrice(MatriceEntier1).MTPAfficherMatrice();
+		COperator<double>::OPEDivision_Externe(MatriceEntier1, 3.0).MTPAfficherMatrice();
+		COperator<double>::OPEMultiplication_Externe(MatriceEntier1, 3.0).MTPAfficherMatrice();
 
-
+		COperator<double>::OPEMultiplication_Matrice(MatriceEntier1, MatriceEntier2).MTPAfficherMatrice();
+		COperator<double>::OPEAddition_Matrice(MatriceEntier1, MatriceEntier2).MTPAfficherMatrice();
+		COperator<double>::OPESoustraction_Matrice(MatriceEntier1, MatriceEntier2).MTPAfficherMatrice();
 		//printf("\n %d", MatriceEntier1.MTPLire_NbColonne());
 
 
