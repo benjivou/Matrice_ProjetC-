@@ -14,6 +14,7 @@ public:
 
 	unsigned int EXCLireErreur() { return uiEXCErreur; }
 	void EXCModifierErreur(unsigned int uiErreur) { uiEXCErreur = uiErreur; }
+	void EXCAfficherErreur();
 
 };
 
