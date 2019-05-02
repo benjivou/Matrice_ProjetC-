@@ -38,9 +38,9 @@ int main()
 		printf("Test COperator\n");
 
 
-		COperator::OPETranspose_Matrice(MatriceEntier1).MTPAfficherMatrice();
+		/*COperator::OPETranspose_Matrice(MatriceEntier1).MTPAfficherMatrice();
 		COperator::OPEDivision_Externe(MatriceEntier1, 3.0).MTPAfficherMatrice();
-		COperator::OPEMultiplication_Externe(MatriceEntier1, 3.0).MTPAfficherMatrice();
+		COperator::OPEMultiplication_Externe(MatriceEntier1, 3.0).MTPAfficherMatrice();*/
 
 
 		//printf("\n %d", MatriceEntier1.MTPLire_NbColonne());
