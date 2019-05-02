@@ -8,14 +8,6 @@
 
 #ifndef CMATRICE_H
 #define CMATRICE_H
-#include "CException.h"
-
-#define Nb_Colonne_Ligne_Erreur 1
-#define Nb_Colonne_Ligne_Diff_Add_Erreur 2
-#define Nb_Colonne_Ligne_Diff_Sub_Erreur 3
-#define Nb_Colonne_Ligne_Diff_Mult_Erreur 4
-
-
 
 template <class MType>
 class CMatrice
@@ -37,9 +29,6 @@ public:
 	~CMatrice<MType>();
 
 	CMatrice<MType> &operator=(CMatrice<MType> &MTPParam);
-	CMatrice<MType> &operator+(CMatrice<MType> &MTPParam);
-	CMatrice<MType> &operator-(CMatrice<MType> &MTPParam);
-	CMatrice<MType> &operator*(CMatrice<MType> &MTPParam);
 
 	//Méthodes
 
@@ -48,6 +37,7 @@ public:
 	unsigned int MTPLire_NbLigne() { return uiMTPNbLigne; } //inline
 	unsigned int MTPLire_NbColonne() { return uiMTPNbColonne; } //inline
 
+	void MTPViderMatrice();
 	void MTPAfficherMatrice();
 
 };

@@ -11,7 +11,7 @@
 #ifndef CFICHIER_H
 #define CFICHIER_H
 #define MAX_LONGUEUR_LINE 80
-#define MAX_TAILLE_ARG 20		// nombre de caractère dans 1 argument du fichier
+#define MAX_TAILLE_ARG 7		// nombre de caractère dans 1 argument du fichier
 /* Initialisation des balises à trouver dans le fichier */
 #define NB_BALISE 4
 #define TAILLE_BALISE_TYPE 13
