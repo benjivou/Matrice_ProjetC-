@@ -14,9 +14,9 @@ int main(int argc, char *argv[]
 {
 	double dSaisieUtilisateur = -1.0;
 	unsigned int uiNbMatriceValide = 0;
-	
-	
-	// Si erreur : pas de paramètre 
+
+
+	// Si erreur : pas de paramètre
 	if (argc > 0)
 	{
 		/* Etape 1 : recupération des paramèrtres */
@@ -25,7 +25,7 @@ int main(int argc, char *argv[]
 
 		try
 		{
-			
+
 			// recupération / génération
 			for (int iPosition_Entre = 1; iPosition_Entre < argc; iPosition_Entre++)
 			{
@@ -44,20 +44,20 @@ int main(int argc, char *argv[]
 			while (dSaisieUtilisateur < 0.0)
 			{
 				std::cout << "Saisir un valeur pour la division des matrices :\n";
-				
-				
+
+
 				std::cin >> dSaisieUtilisateur;
-				
+
 				while (!dSaisieUtilisateur)
 				{
 					cin.clear();
-					printf( "Une valeur strictement positive est plus à propos dans cette situation\n");
+					printf("Une valeur strictement positive est plus à propos dans cette situation\n");
 					getchar();
 					std::cin >> dSaisieUtilisateur;
 				}
-				
+
 				cin.clear();
-				
+
 
 			}
 			std::cout << "Saisie réussite\n";
@@ -100,13 +100,13 @@ int main(int argc, char *argv[]
 			cout << "Test de l'addition \n";
 			// allocation d'une matrice
 			CMatrice<double> *pmatBuffer = new CMatrice<double>(ppmatEntree[0][0]);
-			
+
 			for (size_t iPosition_Matrice = 1; iPosition_Matrice < uiNbMatriceValide; iPosition_Matrice++)
 			{
 				try
 				{
 					*pmatBuffer = *pmatBuffer + ppmatEntree[iPosition_Matrice][0];
-					
+
 				}
 				catch (CException excErreur)
 				{
@@ -117,7 +117,7 @@ int main(int argc, char *argv[]
 			}
 			pmatBuffer->MTPAfficherMatrice();
 			// Alternance addition / soustraction
-			
+
 			pmatBuffer[0] = ppmatEntree[0][0];	// reinitialisation
 
 			for (size_t iPosition_Matrice = 1; iPosition_Matrice < uiNbMatriceValide; iPosition_Matrice++)
@@ -132,8 +132,8 @@ int main(int argc, char *argv[]
 					{
 						*pmatBuffer = *pmatBuffer + ppmatEntree[iPosition_Matrice][0];
 					}
-					
-					
+
+
 				}
 				catch (CException excErreur)
 				{
@@ -145,7 +145,7 @@ int main(int argc, char *argv[]
 			pmatBuffer->MTPAfficherMatrice();
 
 			/* Step final : Vidange memoire*/
-			// Matrice d'entrée 
+			// Matrice d'entrée
 			free(ppmatEntree);
 			for (size_t iCurrentFicfichier = 0; iCurrentFicfichier < uiNbMatriceValide; iCurrentFicfichier++)
 			{
@@ -164,12 +164,12 @@ int main(int argc, char *argv[]
 			}
 			free(ppficBuffer_CFichier);
 			// Buffer Addition
-			
+
 			excErreur.EXCAfficherErreur();
 		}
-		
+
 	}
-	
+
 
 	getchar();
 	return 0;

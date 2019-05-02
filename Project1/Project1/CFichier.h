@@ -1,20 +1,21 @@
-/*	@brief Cette classe permet de récupérer
-*	les informations du fichier et après les stocks
+/*	@brief Cette classe permet de rï¿½cupï¿½rer
+*	les informations du fichier et aprï¿½s les stocks
 *	dans une matrice et garde le type dans un attribut
 */
 #include "CMatrice.h"
 #include <stdio.h>
-#include <stdbool.h> 
+#include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
 
 #ifndef CFICHIER_H
-#define CFICHIER_H 
+#define CFICHIER_H
 
 
 #define MAX_LONGUEUR_LINE 80
-#define MAX_TAILLE_ARG 7		// nombre de caractère dans 1 argument du fichier
-/* Initialisation des balises à trouver dans le fichier */
+
+#define MAX_TAILLE_ARG 20		// nombre de caractÃ¨re dans 1 argument du fichier
+/* Initialisation des balises Ã  trouver dans le fichier */
 #define NB_BALISE 4
 #define TAILLE_BALISE_TYPE 13
 #define TAILLE_BALISE_NBLIGNES 10
@@ -37,7 +38,7 @@ public:
 	CFichier(const char* adrcAdresse);
 	~CFichier();
 
-	// Getter 
+	// Getter
 	CMatrice <double> *FICLire_MTMPMatrice() { return pmatStockage; };// inline
 	int FICLire_NbLigne() { return pmatStockage->MTPLire_NbLigne(); } //inline
 	int FICLire_NbColonne() { return pmatStockage->MTPLire_NbColonne(); } //inline
