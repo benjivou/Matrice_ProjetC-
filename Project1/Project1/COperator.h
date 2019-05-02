@@ -3,11 +3,13 @@
 #define	COPERATOR
 #include "CMatrice.h"
 
+template <class MType>
 class COperator
 {
 public:
-	static CMatrice<double> OPETranspose_Matrice(CMatrice<double> matElement);
-	static CMatrice<double> OPEDivision_Externe(CMatrice<double> matElement, double dDiviseur);
-	static CMatrice<double> OPEMultiplication_Externe(CMatrice<double> matElement, double dMutiplicateur);
+	static CMatrice<MType> OPETranspose_Matrice(CMatrice<MType> matElement);
+	static CMatrice<MType> OPEDivision_Externe(CMatrice<MType> matElement, MType dDiviseur);
+	static CMatrice<MType> OPEMultiplication_Externe(CMatrice<MType> matElement, MType dMutiplicateur);
 };
+#include "COperator.cpp"
 #endif // !COPERATOR

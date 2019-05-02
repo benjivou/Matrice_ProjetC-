@@ -1,9 +1,8 @@
 #include "CFichier.h"
 
 
-/* */
 /**
- *\brief Constructeur par dÃ©faut il sert simplement Ã  Ã©viter les problÃ¨mes de crÃ©ations par dÃ©faut
+ *\brief Constructeur par défaut il sert simplement à éviter les problèmes de créations par défaut
  */
 CFichier::CFichier()
 {
@@ -13,11 +12,11 @@ CFichier::CFichier()
 
 
 /**
- *\brief ne fait rien car on dÃ©truit le CFichier indÃ©pendemment du CMatrice
+ *\brief ne fait rien car on détruit le CFichier indépendemment du CMatrice
  */
 CFichier::~CFichier()
 {
-	// s'il y a une CMatrice allouÃ©e dynamiquement
+	// s'il y a une CMatrice allouée dynamiquement
 	if (*pcType != '\0')
 	{
 		delete pmatStockage;
@@ -25,22 +24,22 @@ CFichier::~CFichier()
 }
 
 /**
- *\brief On lui passe en paramÃ¨tre un chemin d'accÃ©s Ã  un fichier, gÃ©nÃ©re une matrice avec les informations du fichier
- *\param[in] cAdresse c'est le chemin d'accÃ©s au fichier cible
- *\return un objet CFichier, initialiser avec CFichier() si problÃ©me ou vide
+ *\brief On lui passe en paramètre un chemin d'accés à un fichier, génére une matrice avec les informations du fichier
+ *\param[in] cAdresse c'est le chemin d'accés au fichier cible
+ *\return un objet CFichier, initialiser avec CFichier() si probléme ou vide
  * sinon c'est un Cfichier avec les bonnes valeurs
  */
 CFichier::CFichier(const char * cAdresse)
 {
-
+	
 	printf("%s \n", cAdresse);
 	unsigned int uiPosLigne;
 	int iPos;						// position dns la ligne
-	int iValid = 1;					// dit s'il y a une erreur
-	unsigned int uiLigne = 0;		// donne la ligne du fichier en cours d'Ã©tude
-	char pcLine[MAX_LONGUEUR_LINE];	// ligne d'argument pour crÃ©er la matrice
+	
+	unsigned int uiLigne = 0;		// donne la ligne du fichier en cours d'étude
+	char pcLine[MAX_LONGUEUR_LINE];	// ligne d'argument pour créer la matrice
 
-	/* Variable nÃ©cessaire Ã  la crÃ©ation de matrice*/
+	/* Variable nécessaire à la création de matrice*/
 	char pcArgType[MAX_TAILLE_ARG];
 	unsigned int uiColonne;
 	unsigned int iLigne;
@@ -52,28 +51,29 @@ CFichier::CFichier(const char * cAdresse)
 	// Si erreur : Ouverture
 	if (pfFile == NULL)
 	{
-		iValid = 0;
-		printf("Chemin invalid\n");
+		fclose(pfFile);
+		CException EXCChemin_Invalid(CHEMIN_INVALID);
+		throw EXCChemin_Invalid;
 	}
 	else
 	{
 		/* Step2 : Initialisation */
-		// RÃ©cupÃ©ration des colonnes / lignes  / types
-		while (iValid == 1 && uiLigne < 4 && fgets(pcLine, MAX_LONGUEUR_LINE, pfFile) != NULL)
+		// Récupération des colonnes / lignes  / types
+		while ( uiLigne < 4 && fgets(pcLine, MAX_LONGUEUR_LINE, pfFile) != NULL)
 		{
-
+			
 			/* test de la balise */
 			// balise invalide
 			if (FICStartWith(ppcTestBalise[uiLigne], pcLine, MAX_LONGUEUR_LINE) == 0)
 			{
-
-				iValid = 0;
-				printf("Syntaxe error: '%s'\n", pcLine);
+				fclose(pfFile);
+				CException EXCBalise_Invalid(BALISE_INVALID);
+				throw EXCBalise_Invalid;
 			}
 			/* Les balises sont bonnes */
 			else
 			{
-				// positionne le pointeur pour rÃ©cupÃ©rÃ© la valeur
+				// positionne le pointeur pour récupéré la valeur
 				iPos = iLongueurBal[uiLigne];
 
 				/* balise type */
@@ -82,15 +82,15 @@ CFichier::CFichier(const char * cAdresse)
 					// Si erreur : Type trop long
 					if (FICCopieString(pcLine + iPos-1, pcArgType) == 1)
 					{
-						iValid = 0;
-						printf("Trop de caractÃ¨re pour definir le type \n ");
-						//iPos1--;
+						fclose(pfFile);
+						CException EXCType_Trop_Long(TYPE_TROP_LONG);
+						throw EXCType_Trop_Long;
 					}
 				}
 				/* balise restantes*/
 				else
 				{
-					iPos--;	// repositionnement du ^pointeur sur le dÃ©but de la value
+					iPos--;	// repositionnement du ^pointeur sur le début de la value
 					/* balise NBLigne, NBColonne*/
 					if (uiLigne == 1)
 					{
@@ -106,49 +106,38 @@ CFichier::CFichier(const char * cAdresse)
 
 			uiLigne++;
 		}
+		
 
 
-
-		// CrÃ©ation de l'objet CMatrice
+		// Création de l'objet CMatrice
 		if (FICStartWith("double", pcArgType, MAX_TAILLE_ARG) == 1)
 		{
-
-			FICCopieString((char*)"double",pcType);				// Sauvegarde du type
+			
+			FICCopieString((char*)"double",pcType);				// Sauvegarde du type 
 
 			uiPosLigne = 0;
 
 			pmatStockage = new CMatrice<double>(iLigne, uiColonne);
 			/* Step3 : Remplissage */
-			// recupÃ©ration de la ligne
+			// recupération de la ligne
 			while (uiPosLigne < iLigne && fgets(pcLine, MAX_LONGUEUR_LINE, pfFile) != NULL )
 			{
-				// Remplissage case Ã  case
+				// Remplissage case à case
 				FICStocke_Ligne_Dans_Matrice(pcLine, pmatStockage, uiPosLigne);
-				uiPosLigne++;		// il reste Ã  rÃ©cupÃ©rer une ligne de moins
+				uiPosLigne++;		// il reste à récupérer une ligne de moins
 			}
-			// Si erreur : fichier fini avant la fin
-			// Si erreur : NaN
-			// Si erreur : Syntax
 		}
 		// Si erreur : mauvais type
 		else
 		{
-			printf("mauvais type de matrice");
-			iValid = 0;
+			fclose(pfFile);
+			CException EXCTypeDifferentDeDouble(MAUVAIS_TYPE_MATRICE);
+			throw EXCTypeDifferentDeDouble;
 		}
-
 	}
 
-	// fichier Ã  problÃ¨me
-	if (iValid == 0)
-	{
-		pmatStockage = new CMatrice<double>();
-		*pcType = '\0';
-	}
-	else
-	{
-		fclose(pfFile);
-	}
+	fclose(pfFile);
+	
 }
 
 void CFichier::FICAffiche_Contenu_Fich()
@@ -156,11 +145,11 @@ void CFichier::FICAffiche_Contenu_Fich()
 	printf(" \nSon type est : %s \n", pcType);
 	pmatStockage->MTPAfficherMatrice();
 }
-
-
+	
+	
 
 /*
- *\brief trouve la premiÃ¨re occurrence de cSeparateur dansla pcLigne
+ *\brief trouve la première occurrence de cSeparateur dansla pcLigne
  *\param[out] pointeur sur la nouvelle occurrence, sinon pointeur nullptr
  */
 char * CFichier::FICFindFirstChar(char * pcLigne, char cSeparateur)
@@ -181,29 +170,27 @@ char * CFichier::FICFindFirstChar(char * pcLigne, char cSeparateur)
 /**
  *\brief fonction cacher pour tester les balises
  *\param[in] cPrefx
- *\param[in] cMot Ã  comparer
+ *\param[in] cMot à comparer
  *\param[out] 1 si c'est bon 0 sinon
  */
 int CFichier::FICStartWith(const char * cPrefix, const char * cMot, int iLongueurPrefix)
-{
+{	
 	{
-
+		
 		int iRes = 0;
 		int iPosition = 0;
 
 		while (iPosition < iLongueurPrefix && cMot[iPosition] != '\0' && cPrefix[iPosition] == cMot[iPosition])
 		{
-
+			
 			iPosition++;
-
-			// cas terminal
 
 		}
 		if (cMot[iPosition] != '\0')
 		{
 			iRes = 1;
 		}
-
+		
 		return iRes;
 	}
 }
@@ -212,7 +199,7 @@ int CFichier::FICCopieString(char * pcSrc, char * pcDest)
 {
 	int iPos1 = 0;
 	int res;
-	// Stockage des Ã©lÃ©ments
+	// Stockage des éléments
 	while (*(pcSrc + iPos1) != '\0' && iPos1 < MAX_TAILLE_ARG)
 	{
 		pcDest[iPos1] = pcSrc[iPos1];
@@ -225,7 +212,7 @@ int CFichier::FICCopieString(char * pcSrc, char * pcDest)
 }
 
 /**
- *\brief rempli la matrice du CFichier avec une ligne d'Ã©lÃ©ment
+ *\brief rempli la matrice du CFichier avec une ligne d'élément
  */
 
 int CFichier::FICStocke_Ligne_Dans_Matrice(char* pcLigne, CMatrice<double>* pmStockage, unsigned int uiCurrentLigne)
@@ -234,16 +221,18 @@ int CFichier::FICStocke_Ligne_Dans_Matrice(char* pcLigne, CMatrice<double>* pmSt
 	char *pcCurrent;	// pointeur sur la derniere occurence du ' '
 	pcCurrent = FICFindFirstChar(pcLigne, ' ');
 
-	while (pcCurrent != nullptr)
+	while (pcCurrent != nullptr && uiCurrentColonne != (pmStockage->MTPLire_NbColonne() - 1))
 	{
 		*pcCurrent = '\0';
-
+		
 		pmatStockage->MTPModifier_Element(uiCurrentLigne, uiCurrentColonne, atof(pcLigne));	// remplissage de la matrice
-		pcLigne = pcCurrent + 1;															// dÃ©place le pointeur
+		pcLigne = pcCurrent + 1;															// déplace le pointeur
 		pcCurrent = FICFindFirstChar(pcLigne, ' ');
 		uiCurrentColonne++;
 	}
-	pmatStockage->MTPModifier_Element(uiCurrentLigne, uiCurrentColonne, atof(pcLigne));	// dernier Ã©lÃ©ment
+	// la dernière occurrence est volontairement différente, car il n'y a pas à repositionner pcCurrent après
+	pmatStockage->MTPModifier_Element(uiCurrentLigne, uiCurrentColonne, atof(pcLigne));	// dernier élément
 
 	return 0;
 }
+
