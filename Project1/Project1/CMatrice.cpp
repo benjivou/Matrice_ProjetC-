@@ -56,13 +56,12 @@ CMatrice<MType>::CMatrice(unsigned int uiTaille)
 template<class MType>
 CMatrice<MType>::CMatrice(unsigned int uiNbLigne, unsigned int uiNBCol)
 {
-	
-
 	if (uiNbLigne <= 0 || uiNBCol <= 0)
 	{
 		CException EXCNbLigColDiffErreur(Nb_Colonne_Ligne_Erreur);
 		throw EXCNbLigColDiffErreur;
 	}
+
 	uiMTPNbColonne = uiNBCol;
 	uiMTPNbLigne = uiNbLigne;
 
@@ -150,93 +149,95 @@ CMatrice<MType> & CMatrice<MType>::operator+(CMatrice<MType> &MTPParam)
 		CException EXCNbLigColDiff(Nb_Colonne_Ligne_Diff_Add_Erreur);
 		throw EXCNbLigColDiff;
 	}
-	CMatrice <MType> *MTPMatriceResultat = new CMatrice<MType>(uiMTPNbLigne, uiMTPNbColonne);
+	CMatrice <MType> MTPMatriceResultat(uiMTPNbLigne, uiMTPNbColonne);
 
-	MTPMatriceResultat->ppMTPMatrice = new MType*[uiMTPNbLigne];
+	MTPMatriceResultat.ppMTPMatrice = new MType*[uiMTPNbLigne];
 
 	for (unsigned int uiMTPBoucle2 = 0; uiMTPBoucle2 < uiMTPNbLigne; uiMTPBoucle2++)
 	{
-		MTPMatriceResultat->ppMTPMatrice[uiMTPBoucle2] = new MType[uiMTPNbColonne];
+		MTPMatriceResultat.ppMTPMatrice[uiMTPBoucle2] = new MType[uiMTPNbColonne];
 	}
 
 	for (unsigned int uiMTPBoucle = 0; uiMTPBoucle < uiMTPNbLigne; uiMTPBoucle++)
 	{
 		for (unsigned int uiMTPBoucle1 = 0; uiMTPBoucle1 < uiMTPNbColonne; uiMTPBoucle1++)
 		{
-			MTPMatriceResultat->ppMTPMatrice[uiMTPBoucle][uiMTPBoucle1] = ppMTPMatrice[uiMTPBoucle][uiMTPBoucle1] + MTPParam.ppMTPMatrice[uiMTPBoucle][uiMTPBoucle1];
+			MTPMatriceResultat.ppMTPMatrice[uiMTPBoucle][uiMTPBoucle1] = ppMTPMatrice[uiMTPBoucle][uiMTPBoucle1] + MTPParam.ppMTPMatrice[uiMTPBoucle][uiMTPBoucle1];
 		}
 	}
-	return *MTPMatriceResultat;
+	return MTPMatriceResultat;
 }
 
 template<class MType>
 CMatrice<MType> & CMatrice<MType>::operator-(CMatrice<MType> &MTPParam)
 {
+	cout << "TTEFEFe" << endl;
 	if (uiMTPNbColonne != MTPParam.MTPLire_NbColonne() || uiMTPNbLigne != MTPParam.MTPLire_NbLigne())
 	{
 		CException EXCNbLigColDiff(Nb_Colonne_Ligne_Diff_Sub_Erreur);
 		throw EXCNbLigColDiff;
 	}
 
-	CMatrice <MType> *MTPMatriceResultat = new CMatrice<MType>(uiMTPNbLigne, uiMTPNbColonne);
+	CMatrice <MType> MatriceResultat(uiMTPNbLigne, uiMTPNbColonne);
 
-	MTPMatriceResultat->ppMTPMatrice = new MType*[uiMTPNbLigne];
+	MatriceResultat.ppMTPMatrice = new MType*[uiMTPNbLigne];
 
 	for (unsigned int uiMTPBoucle2 = 0; uiMTPBoucle2 < uiMTPNbLigne; uiMTPBoucle2++)
 	{
-		MTPMatriceResultat->ppMTPMatrice[uiMTPBoucle2] = new MType[uiMTPNbColonne];
+		MatriceResultat.ppMTPMatrice[uiMTPBoucle2] = new MType[uiMTPNbColonne];
 	}
 
 	for (unsigned int uiMTPBoucle = 0; uiMTPBoucle < uiMTPNbLigne; uiMTPBoucle++)
 	{
 		for (unsigned int uiMTPBoucle1 = 0; uiMTPBoucle1 < uiMTPNbColonne; uiMTPBoucle1++)
 		{
-			MTPMatriceResultat->ppMTPMatrice[uiMTPBoucle][uiMTPBoucle1] = ppMTPMatrice[uiMTPBoucle][uiMTPBoucle1] - MTPParam.ppMTPMatrice[uiMTPBoucle][uiMTPBoucle1];
+			MatriceResultat.ppMTPMatrice[uiMTPBoucle][uiMTPBoucle1] = ppMTPMatrice[uiMTPBoucle][uiMTPBoucle1] - MTPParam.ppMTPMatrice[uiMTPBoucle][uiMTPBoucle1];
 		}
 	}
-	return *MTPMatriceResultat;
+	return MatriceResultat;
 
 }
 
 template<class MType>
 CMatrice<MType> & CMatrice<MType>::operator*(CMatrice<MType> &MTPParam)
 {
-	if (uiMTPNbColonne != MTPParam.MTPLire_NbLigne())
+	if (uiMTPNbColonne == MTPParam.MTPLire_NbLigne())
 	{
 		CException EXCNbLigColDiff(Nb_Colonne_Ligne_Diff_Mult_Erreur);
 		throw EXCNbLigColDiff;
 	}
-	CMatrice <MType> *MTPMatriceResultat = new CMatrice<MType>(uiMTPNbLigne, uiMTPNbColonne);
+	CMatrice <MType> MatriceResultat(uiMTPNbLigne, MTPParam.MTPLire_NbColonne());
 
-	MTPMatriceResultat->ppMTPMatrice = new MType*[uiMTPNbLigne];
+	MatriceResultat.ppMTPMatrice = new MType*[uiMTPNbLigne];
 
 	for (unsigned int uiMTPBoucle2 = 0; uiMTPBoucle2 < uiMTPNbLigne; uiMTPBoucle2++)
 	{
-		MTPMatriceResultat->ppMTPMatrice[uiMTPBoucle2] = new MType[MTPParam.MTPLire_NbColonne()];
+		MatriceResultat.ppMTPMatrice[uiMTPBoucle2] = new MType[MTPParam.MTPLire_NbColonne()];
 	}
 
+	//exception : ligne  if(colonne == m1.ligne) // si nb colonnes = nb lignes de l'autre matrice 
 	for (unsigned int uiMTPBoucle = 0; uiMTPBoucle < uiMTPNbLigne; uiMTPBoucle++)
 	{
 		for (unsigned int uiMTPBoucle1 = 0; uiMTPBoucle1 < MTPParam.MTPLire_NbColonne(); uiMTPBoucle1++)
 		{
 			for (unsigned int uiMTPBoucle2 = 0; uiMTPBoucle2 < uiMTPNbColonne; uiMTPBoucle2++)
 			{
-				MTPMatriceResultat->ppMTPMatrice[uiMTPBoucle][uiMTPBoucle1] += ppMTPMatrice[uiMTPBoucle][uiMTPBoucle2] * MTPParam.ppMTPMatrice[uiMTPBoucle2][uiMTPBoucle1];
+				MatriceResultat.ppMTPMatrice[uiMTPBoucle][uiMTPBoucle1] += ppMTPMatrice[uiMTPBoucle][uiMTPBoucle2] * MTPParam.ppMTPMatrice[uiMTPBoucle2][uiMTPBoucle1];
 			}
 		}
 	}
-	return *MTPMatriceResultat;
+	return MatriceResultat;
 }
 
 template<class MType>
 void CMatrice<MType>::MTPAfficherMatrice()
 {
-	cout <<"Matrice : " << endl;
+	printf("Matrice : \n");
 	for (unsigned int uiMTPBoucle = 0; uiMTPBoucle < uiMTPNbLigne; uiMTPBoucle++)
 	{
 		for (unsigned int uiMTPBoucle1 = 0; uiMTPBoucle1 < uiMTPNbColonne; uiMTPBoucle1++)
 		{
-			cout << " " << ppMTPMatrice[uiMTPBoucle][uiMTPBoucle1] << " ";
+			cout <<" "<< ppMTPMatrice[uiMTPBoucle][uiMTPBoucle1] <<" " ;
 		}
 		cout << endl;
 	}

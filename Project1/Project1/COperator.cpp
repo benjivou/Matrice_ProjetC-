@@ -1,4 +1,5 @@
 
+
 template <class MType>
 CMatrice<MType> COperator<MType>::OPETranspose_Matrice(CMatrice<MType> matElement)
 {
@@ -22,11 +23,6 @@ CMatrice<MType> COperator<MType>::OPETranspose_Matrice(CMatrice<MType> matElemen
 template <class MType>
 CMatrice<MType> COperator<MType>::OPEDivision_Externe(CMatrice<MType> matElement, MType dDiviseur)
 {
-	if (dDiviseur == 0)
-	{
-		CException EXCDenNul(Denominateur_Nul_Erreur);
-		throw EXCDenNul;
-	}
 	for (size_t iLigneElement = 0; iLigneElement < matElement.MTPLire_NbLigne(); iLigneElement++)
 	{
 		for (size_t iColonneElement = 0; iColonneElement < matElement.MTPLire_NbColonne(); iColonneElement++)
@@ -48,22 +44,4 @@ CMatrice<MType> COperator<MType>::OPEMultiplication_Externe(CMatrice<MType> matE
 		}
 	}
 	return matElement;
-}
-
-template <class MType>
-CMatrice<MType> &COperator<MType>::OPEMultiplication_Matrice(CMatrice<MType> matElement1, CMatrice<MType> matElement2)
-{
-	return (matElement1 * matElement2);
-}
-
-template <class MType>
-CMatrice<MType> &COperator<MType>::OPEAddition_Matrice(CMatrice<MType> matElement1, CMatrice<MType> matElement2)
-{
-	return (matElement1 + matElement2);
-}
-
-template <class MType>
-CMatrice<MType> &COperator<MType>::OPESoustraction_Matrice(CMatrice<MType> matElement1, CMatrice<MType> matElement2)
-{
-	return (matElement1 - matElement2);
 }
