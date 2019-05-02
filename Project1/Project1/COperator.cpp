@@ -1,5 +1,4 @@
 
-
 template <class MType>
 CMatrice<MType> COperator<MType>::OPETranspose_Matrice(CMatrice<MType> matElement)
 {
@@ -23,6 +22,11 @@ CMatrice<MType> COperator<MType>::OPETranspose_Matrice(CMatrice<MType> matElemen
 template <class MType>
 CMatrice<MType> COperator<MType>::OPEDivision_Externe(CMatrice<MType> matElement, MType dDiviseur)
 {
+	if (dDiviseur == 0)
+	{
+		CException EXCDenNul(Denominateur_Nul_Erreur);
+		throw EXCDenNul;
+	}
 	for (size_t iLigneElement = 0; iLigneElement < matElement.MTPLire_NbLigne(); iLigneElement++)
 	{
 		for (size_t iColonneElement = 0; iColonneElement < matElement.MTPLire_NbColonne(); iColonneElement++)

@@ -57,7 +57,7 @@ CFichier::CFichier(const char * cAdresse)
 	}
 	else
 	{
-		cout << "Chemin Valid \n" ;
+		cout << "Chemin Valid \n";
 		/* Step2 : Initialisation */
 		// R�cup�ration des colonnes / lignes  / types
 		while (iValid == 1 && uiLigne < 4 && fgets(pcLine, MAX_LONGUEUR_LINE, pfFile) != NULL)
@@ -123,7 +123,7 @@ CFichier::CFichier(const char * cAdresse)
 			// recup�ration de la ligne
 			while (uiPosLigne < iLigne && fgets(pcLine, MAX_LONGUEUR_LINE, pfFile) != NULL)
 			{
-				
+
 				// Remplissage case � case
 				FICStocke_Ligne_Dans_Matrice(pcLine, pmatStockage, uiPosLigne);
 				uiPosLigne++;		// il reste � r�cup�rer une ligne de moins
@@ -238,17 +238,17 @@ int CFichier::FICStocke_Ligne_Dans_Matrice(char* pcLigne, CMatrice<double>* pmSt
 
 	while (pcCurrent != nullptr)
 	{
-		
+
 		*pcCurrent = '\0';	// d�place le pointeur
 		pmatStockage->MTPModifier_Element(uiCurrentLigne, uiCurrentColonne, atof(pcLigne));	// remplissage de la matrice
 
-		
 
-		pcLigne = pcCurrent + 1;	
-		
+
+		pcLigne = pcCurrent + 1;
+
 		pcCurrent = FICFindFirstChar(pcLigne, ' ');
 		uiCurrentColonne++;
-		
+
 	}
 	pmatStockage->MTPModifier_Element(uiCurrentLigne, uiCurrentColonne, atof(pcLigne));	// dernier �l�ment
 
