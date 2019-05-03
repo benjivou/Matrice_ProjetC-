@@ -47,7 +47,7 @@ int main(int argc, char *argv[]
 
 
 				std::cin >> dSaisieUtilisateur;
-
+				/*
 				while (!dSaisieUtilisateur)
 				{
 					cin.clear();
@@ -55,7 +55,7 @@ int main(int argc, char *argv[]
 					getchar();
 					std::cin >> dSaisieUtilisateur;
 				}
-
+				*/
 				cin.clear();
 
 
@@ -158,6 +158,7 @@ int main(int argc, char *argv[]
 		}
 		catch (CException excErreur)
 		{
+			excErreur.EXCAfficherErreur();
 			free(ppmatEntree);
 			for (size_t iCurrentFicfichier = 0; iCurrentFicfichier < uiNbMatriceValide; iCurrentFicfichier++)
 			{
@@ -166,12 +167,12 @@ int main(int argc, char *argv[]
 			free(ppficBuffer_CFichier);
 			// Buffer Addition
 
-			excErreur.EXCAfficherErreur();
+			
 		}
 
 	}
 
-
 	getchar();
+	
 	return 0;
 }
