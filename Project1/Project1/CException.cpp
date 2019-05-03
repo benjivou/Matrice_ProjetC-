@@ -32,16 +32,16 @@ void CException::EXCAfficherErreur()
 	case 5:
 		cerr << "Erreur : Division par un scalaire egale a 0" << endl;
 		break;
-	case CHEMIN_INVALID:
+	case 11:
 		cerr << "Erreur : Chemin invalid " << endl;
 		break;
-	case BALISE_INVALID:
+	case 12:
 		cerr << "Erreur: mauvaise balises" << endl;
 		break;
-	case TYPE_TROP_LONG:
+	case 13:
 		cerr << "Erreur: mauvaise balises ( Type trop long )" << endl;
 		break;
-	case MAUVAIS_TYPE_MATRICE:
+	case 14:
 		cerr << "Erreur: Type different de double" << endl;
 		break;
 	}

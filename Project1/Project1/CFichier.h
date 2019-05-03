@@ -29,7 +29,11 @@ const char pcBaliseMatrice[TAILLE_BALISE_MATRICE] = "Matrice=[";
 // regroupement
 const int iLongueurBal[NB_BALISE] = { TAILLE_BALISE_TYPE,TAILLE_BALISE_NBLIGNES,TAILLE_BALISE_NBCOLONNES,TAILLE_BALISE_MATRICE };
 const char *ppcTestBalise[NB_BALISE] = { pcBaliseType,pcBaliseNbLignes,pcBaliseNbColonnes,pcBaliseMatrice };
-
+/* Message d'erreur */
+#define CHEMIN_INVALID 11
+#define BALISE_INVALID 12
+#define TYPE_TROP_LONG 13
+#define MAUVAIS_TYPE_MATRICE 14
 
 class CFichier
 {
