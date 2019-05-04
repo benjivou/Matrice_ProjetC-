@@ -10,10 +10,10 @@
 #define CMATRICE_H
 #include "CException.h"
 
-#define Nb_Colonne_Ligne_Erreur 1
-#define Nb_Colonne_Ligne_Diff_Add_Erreur 2
-#define Nb_Colonne_Ligne_Diff_Sub_Erreur 3
-#define Nb_Colonne_Ligne_Diff_Mult_Erreur 4
+#define PARAM_MATRICE_INVALID 1
+#define PARAM_ADD_ERREUR 2
+#define PARAM_SUB_ERREUR 3
+#define PARAM_MULTI_ERREUR 4
 
 
 

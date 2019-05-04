@@ -33,7 +33,7 @@ CMatrice<MType>::CMatrice(unsigned int uiTaille)
 
 	if (uiTaille <= 0)
 	{
-		CException EXCNbLigColErreur(Nb_Colonne_Ligne_Erreur);
+		CException EXCNbLigColErreur(PARAM_MATRICE_INVALID);
 		throw EXCNbLigColErreur;
 	}
 	ppMTPMatrice = new MType*[uiMTPNbLigne];
@@ -60,7 +60,7 @@ CMatrice<MType>::CMatrice(unsigned int uiNbLigne, unsigned int uiNBCol)
 
 	if (uiNbLigne <= 0 || uiNBCol <= 0)
 	{
-		CException EXCNbLigColDiffErreur(Nb_Colonne_Ligne_Erreur);
+		CException EXCNbLigColDiffErreur(PARAM_MATRICE_INVALID);
 		throw EXCNbLigColDiffErreur;
 	}
 	uiMTPNbColonne = uiNBCol;
@@ -147,7 +147,7 @@ CMatrice<MType> & CMatrice<MType>::operator+(CMatrice<MType> &MTPParam)
 {
 	if (uiMTPNbColonne != MTPParam.MTPLire_NbColonne() || uiMTPNbLigne != MTPParam.MTPLire_NbLigne())
 	{
-		CException EXCNbLigColDiff(Nb_Colonne_Ligne_Diff_Add_Erreur);
+		CException EXCNbLigColDiff(PARAM_ADD_ERREUR);
 		throw EXCNbLigColDiff;
 	}
 	CMatrice <MType> *MTPMatriceResultat = new CMatrice<MType>(uiMTPNbLigne, uiMTPNbColonne);
@@ -174,7 +174,7 @@ CMatrice<MType> & CMatrice<MType>::operator-(CMatrice<MType> &MTPParam)
 {
 	if (uiMTPNbColonne != MTPParam.MTPLire_NbColonne() || uiMTPNbLigne != MTPParam.MTPLire_NbLigne())
 	{
-		CException EXCNbLigColDiff(Nb_Colonne_Ligne_Diff_Sub_Erreur);
+		CException EXCNbLigColDiff(PARAM_SUB_ERREUR);
 		throw EXCNbLigColDiff;
 	}
 
@@ -203,7 +203,7 @@ CMatrice<MType> & CMatrice<MType>::operator*(CMatrice<MType> &MTPParam)
 {
 	if (uiMTPNbColonne != MTPParam.MTPLire_NbLigne())
 	{
-		CException EXCNbLigColDiff(Nb_Colonne_Ligne_Diff_Mult_Erreur);
+		CException EXCNbLigColDiff(PARAM_MULTI_ERREUR);
 		throw EXCNbLigColDiff;
 	}
 	CMatrice <MType> *MTPMatriceResultat = new CMatrice<MType>(uiMTPNbLigne, uiMTPNbColonne);

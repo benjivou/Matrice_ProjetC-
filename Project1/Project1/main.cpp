@@ -117,7 +117,7 @@ int main(int argc, char *argv[]
 			pmatBuffer->MTPAfficherMatrice();
 			cout << "Test de l'addition termine\n";
 			// Alternance addition / soustraction
-			cout << "Debut du test de la soustraction" << endl;
+			cout << "Debut du test de la soustraction/addition" << endl;
 			pmatBuffer[0] = ppMATEntree[0][0];	// réinitialisation
 
 			for (size_t iPosition_Matrice = 1; iPosition_Matrice < uiNbMatriceValide; iPosition_Matrice++)
@@ -144,11 +144,11 @@ int main(int argc, char *argv[]
 
 			}
 			pmatBuffer->MTPAfficherMatrice();
-			cout << "Test de la division termine\n";
+			cout << "Test de la soustraction/addition termine\n";
 			/* Step final : Vidange mémoire*/
 
 			// Test Multiplication des Matrices passez en paramètre
-			cout << "Debut du test de la multiplication" << endl;
+			cout << "Debut du test de la multiplication interne" << endl;
 			pmatBuffer[0] = ppMATEntree[0][0];	// reinitialisation
 
 			for (size_t iPosition_Matrice = 1; iPosition_Matrice < uiNbMatriceValide; iPosition_Matrice++)
@@ -165,7 +165,7 @@ int main(int argc, char *argv[]
 
 			}
 			pmatBuffer->MTPAfficherMatrice();
-			cout << "Test de la multiplication termine\n";
+			cout << "Test de la multiplication interne termine\n";
 			/* Step final : Vidange memoire*/
 			// Matrice d'entrée
 			free(ppMATEntree);

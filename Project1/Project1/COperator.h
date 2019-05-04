@@ -1,7 +1,7 @@
 #ifndef COPERATOR
 #define	COPERATOR
 #include "CMatrice.h"
-#define Denominateur_Nul_Erreur 5
+#define DENOMINATEUR_NUL 5
 
 template <class MType>
 class COperator

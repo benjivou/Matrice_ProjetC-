@@ -24,7 +24,7 @@ CMatrice<MType> COperator<MType>::OPEDivision_Externe(CMatrice<MType> matElement
 {
 	if (dDiviseur == 0)
 	{
-		CException EXCDenNul(Denominateur_Nul_Erreur);
+		CException EXCDenNul(DENOMINATEUR_NUL);
 		throw EXCDenNul;
 	}
 	for (size_t iLigneElement = 0; iLigneElement < matElement.MTPLire_NbLigne(); iLigneElement++)
