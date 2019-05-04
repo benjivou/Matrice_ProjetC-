@@ -34,6 +34,7 @@ const char *ppcTestBalise[NB_BALISE] = { pcBaliseType,pcBaliseNbLignes,pcBaliseN
 #define BALISE_INVALID 12
 #define TYPE_TROP_LONG 13
 #define MAUVAIS_TYPE_MATRICE 14
+#define TAILLE_MATRICE_INVALID 15
 
 class CFichier
 {

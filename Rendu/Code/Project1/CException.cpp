@@ -24,7 +24,6 @@ void CException::EXCAfficher_Erreur()
 	case 3:
 		cerr << "Erreur : Soustraction de deux matrices" << endl;
 		break;
-
 	case 4:
 		cerr << "Erreur : Multiplication de deux matrices" << endl;
 		break;
@@ -44,5 +43,7 @@ void CException::EXCAfficher_Erreur()
 	case 14:
 		cerr << "Erreur: Type different de double" << endl;
 		break;
+	case 15:
+		cerr << "Erreur: Taille invalid de matrice, Corrigez le fichier en param" << endl;
 	}
 }

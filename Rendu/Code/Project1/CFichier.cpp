@@ -12,7 +12,7 @@ CFichier::CFichier()
 
 
 /**
- *\brief ne fait rien car on détruit le CFichier indépendemment du CMatrice
+ *\brief desalloue le CMatrice avant de finir 
  */
 CFichier::~CFichier()
 {
@@ -59,9 +59,9 @@ CFichier::CFichier(const char * cAdresse)
 	{
 		/* Step2 : Initialisation */
 		// Récupération des colonnes / lignes  / types
-		while ( uiLigne < 4 && fgets(pcLine, MAX_LONGUEUR_LINE, pfFile) != NULL)
+		while (uiLigne < 4 && fgets(pcLine, MAX_LONGUEUR_LINE, pfFile) != NULL)
 		{
-			
+
 			/* test de la balise */
 			// balise invalide
 			if (FICDemarre_Avec(ppcTestBalise[uiLigne], pcLine, MAX_LONGUEUR_LINE) == 0)
@@ -73,14 +73,13 @@ CFichier::CFichier(const char * cAdresse)
 			/* Les balises sont bonnes */
 			else
 			{
-				// positionne le pointeur pour récupéré la valeur
-				iPos = iLongueurBal[uiLigne];
+				iPos = iLongueurBal[uiLigne];					// positionne le pointeur pour récupéré la valeur
 
 				/* balise type */
 				if (uiLigne == 0)
 				{
 					// Si erreur : Type trop long
-					if (FICCopie_String(pcLine + iPos-1, pcArgType) == 1)
+					if (FICCopie_String(pcLine + iPos - 1, pcArgType) == 1)
 					{
 						fclose(pfFile);
 						CException EXCType_Trop_Long(TYPE_TROP_LONG);
@@ -92,22 +91,33 @@ CFichier::CFichier(const char * cAdresse)
 				{
 					iPos--;	// repositionnement du ^pointeur sur le début de la value
 					/* balise NBLigne, NBColonne*/
-					if (uiLigne == 1)
+					if (uiLigne == 1)					// Balise NBLigne
 					{
+						iLigne = atoi((pcLine + iPos));
 
-						iLigne = atoi((pcLine + iPos));	// recup de la valeur
+						{
+
+						}
 					}
-					if (uiLigne == 2)
+					if (uiLigne == 2)					// Balise NBColonne
 					{
-						uiColonne = atoi((pcLine + iPos));	// recup de la valeur
+						uiColonne = atoi((pcLine + iPos));
 					}
+					else
+					{
+						if (uiLigne <= 0 || uiColonne <= 0)
+						{
+							fclose(pfFile);
+							throw(new CException(TAILLE_MATRICE_INVALID));
+						}
+					}
+
+
+					
 				}
+				uiLigne++;
 			}
-
-			uiLigne++;
 		}
-		
-
 
 		// Création de l'objet CMatrice
 		if (FICDemarre_Avec("double", pcArgType, MAX_TAILLE_ARG) == 1)
@@ -122,9 +132,9 @@ CFichier::CFichier(const char * cAdresse)
 			// recupération de la ligne
 			while (uiPosLigne < iLigne && fgets(pcLine, MAX_LONGUEUR_LINE, pfFile) != NULL )
 			{
-				// Remplissage case à case
+				// Remplissage Ligne à Ligne
 				FICStocke_Ligne_Dans_Matrice(pcLine, pmatStockage, uiPosLigne);
-				uiPosLigne++;		// il reste à récupérer une ligne de moins
+				uiPosLigne++;		
 			}
 		}
 		// Si erreur : mauvais type
@@ -140,6 +150,9 @@ CFichier::CFichier(const char * cAdresse)
 	
 }
 
+/*
+ *\brief Affiche un fichier
+ */
 void CFichier::FICAffiche_Contenu_Fich()
 {
 	printf(" \nSon type est : %s \n", pcType);
@@ -149,8 +162,10 @@ void CFichier::FICAffiche_Contenu_Fich()
 	
 
 /*
- *\brief trouve la première occurrence de cSeparateur dansla pcLigne
- *\param[out] pointeur sur la nouvelle occurrence, sinon pointeur nullptr
+ *\brief trouve la première occurrence de cSeparateur dans la pcLigne
+ *\param[in] pcLigne Ligne à parser 
+ *\param[in] cSeparateur éleemnt à chercher
+ *\param[out] pointeur sur la nouvelle occurrence, sinon nullptr
  */
 char * CFichier::FICTrouve_Premiere_Occurrence(char * pcLigne, char cSeparateur)
 {
@@ -169,8 +184,9 @@ char * CFichier::FICTrouve_Premiere_Occurrence(char * pcLigne, char cSeparateur)
 
 /**
  *\brief fonction cacher pour tester les balises
- *\param[in] cPrefx
+ *\param[in] cPrefx	le préfix recherché
  *\param[in] cMot à comparer
+ *\param[in] iLongueurPrefix Taille du prefix
  *\param[out] 1 si c'est bon 0 sinon
  */
 int CFichier::FICDemarre_Avec(const char * cPrefix, const char * cMot, int iLongueurPrefix)
@@ -179,13 +195,19 @@ int CFichier::FICDemarre_Avec(const char * cPrefix, const char * cMot, int iLong
 		
 		int iRes = 0;
 		int iPosition = 0;
-
+		/*
+		 * Etats de sorties des 3 tests du while
+		 * Cas 1: On a comparé toutes les caractères du Prefix 
+		 * Cas 2: le mot est trop cours 
+		 * Cas 3: les caractères ne correspond pas
+		 */
 		while (iPosition < iLongueurPrefix && cMot[iPosition] != '\0' && cPrefix[iPosition] == cMot[iPosition])
 		{
 			
 			iPosition++;
 
 		}
+		// Les prefix est bien le bon
 		if (cMot[iPosition] != '\0')
 		{
 			iRes = 1;
@@ -195,39 +217,53 @@ int CFichier::FICDemarre_Avec(const char * cPrefix, const char * cMot, int iLong
 	}
 }
 
+
+/**
+ *\brief Rempli pcDest avec les elements de pcSrc
+ *\param[in] pcSrc
+ *\param[in] pcDest
+ *\param[out] 1 si c'est bon 0 sinon
+ */
 int CFichier::FICCopie_String(char * pcSrc, char * pcDest)
 {
 	int iPos1 = 0;
 	int res;
 	// Stockage des éléments
-	while (*(pcSrc + iPos1) != '\0' && iPos1 < MAX_TAILLE_ARG)
+	while (*(pcSrc + iPos1) != '\0' && iPos1 < MAX_TAILLE_ARG)	// MAX_TAILLE_ARG donne la taille max du buffer pcDest
 	{
-		pcDest[iPos1] = pcSrc[iPos1];
+		pcDest[iPos1] = pcSrc[iPos1];			
 		iPos1++;
 	}
 
-	pcSrc[iPos1] == '\0' ? res = 0  : res = 1;
-	pcDest[iPos1] = '\0';
+	pcSrc[iPos1] == '\0' ? res = 0  : res = 1;	// donne 1 s'il n'y a pas de problème
+	pcDest[iPos1] = '\0';						// fermeture de la chaine destinataire
 	return res;
 }
 
 /**
  *\brief rempli la matrice du CFichier avec une ligne d'élément
+ *\param[in] pcLigne Ligne de départ
+ *\param[in] pmStockage	Matrice à remplir 
+ *\param[in] uiCurrentLigne	Donne la ligne à remplir
+ *\param[out] 1 si c'est bon 0 sinon
+ *\warning pcLigne est deplacer sur la dernière valeur, ne pas utiliser avec des listes alloué dynamiquement, car pc Ligne est modifié
  */
 
 int CFichier::FICStocke_Ligne_Dans_Matrice(char* pcLigne, CMatrice<double>* pmStockage, unsigned int uiCurrentLigne)
 {
 	unsigned int uiCurrentColonne = 0;
-	char *pcCurrent;	// pointeur sur la derniere occurence du ' '
+	char *pcCurrent;					// pointeur sur la derniere occurence du ' '
 	pcCurrent = FICTrouve_Premiere_Occurrence(pcLigne, ' ');
 
+	/* L'idée c'est de retrouver le prochaine espace, le remplacer par un caractère de fin de chaine. 
+		Ensuite on déplace la position de pcLigne*/
 	while (pcCurrent != nullptr && uiCurrentColonne != (pmStockage->MTPLire_NbColonne() - 1))
 	{
 		*pcCurrent = '\0';
 		
 		pmatStockage->MTPModifier_Element(uiCurrentLigne, uiCurrentColonne, atof(pcLigne));	// remplissage de la matrice
-		pcLigne = pcCurrent + 1;															// déplace le pointeur
-		pcCurrent = FICTrouve_Premiere_Occurrence(pcLigne, ' ');
+		pcLigne = pcCurrent + 1;															// déplacement le pointeur
+		pcCurrent = FICTrouve_Premiere_Occurrence(pcLigne, ' ');							// Recherche de la prochaine valeur
 		uiCurrentColonne++;
 	}
 
