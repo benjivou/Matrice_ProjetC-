@@ -47,15 +47,14 @@ int main(int argc, char *argv[]
 
 
 				std::cin >> dSaisieUtilisateur;
-				/*
+				
 				while (!dSaisieUtilisateur)
 				{
 					cin.clear();
 					printf("Une valeur strictement positive est plus apprpriée dans cette situation\n");
-					getchar();
 					std::cin >> dSaisieUtilisateur;
 				}
-				*/
+				
 				cin.clear();
 
 
@@ -128,7 +127,7 @@ int main(int argc, char *argv[]
 					if (iPosition_Matrice % 2 == 1)
 					{
 						*pmatBuffer = ppMATEntree[iPosition_Matrice][0];
-						*pmatBuffer = *pmatBuffer - ppmatEntree[iPosition_Matrice][0];
+						*pmatBuffer = *pmatBuffer - ppMATEntree[iPosition_Matrice][0];
 					}
 					else
 					{
@@ -150,13 +149,13 @@ int main(int argc, char *argv[]
 
 			// Test Multiplication des Matrices passez en paramètre
 			cout << "Debut du test de la multiplication" << endl;
-			pmatBuffer[0] = ppmatEntree[0][0];	// reinitialisation
+			pmatBuffer[0] = ppMATEntree[0][0];	// reinitialisation
 
 			for (size_t iPosition_Matrice = 1; iPosition_Matrice < uiNbMatriceValide; iPosition_Matrice++)
 			{
 				try
 				{
-					*pmatBuffer = *pmatBuffer * ppmatEntree[iPosition_Matrice][0];
+					*pmatBuffer = *pmatBuffer * ppMATEntree[iPosition_Matrice][0];
 				}
 				catch (CException excErreur)
 				{
@@ -169,11 +168,11 @@ int main(int argc, char *argv[]
 			cout << "Test de la multiplication termine\n";
 			/* Step final : Vidange memoire*/
 			// Matrice d'entrée
-			free(ppmatEntree);
+			free(ppMATEntree);
 
 			for (size_t iCurrentFicfichier = 0; iCurrentFicfichier < uiNbMatriceValide; iCurrentFicfichier++)
 			{
-				delete ppficBuffer_CFichier[iCurrentFicfichier];
+				delete ppFICBuffer_CFichier[iCurrentFicfichier];
 			}
 			free(ppFICBuffer_CFichier);
 			// Buffer Addition
@@ -185,7 +184,7 @@ int main(int argc, char *argv[]
 			free(ppMATEntree);
 			for (size_t iCurrentFicfichier = 0; iCurrentFicfichier < uiNbMatriceValide; iCurrentFicfichier++)
 			{
-				delete ppficBuffer_CFichier[iCurrentFicfichier];
+				delete ppFICBuffer_CFichier[iCurrentFicfichier];
 			}
 			free(ppFICBuffer_CFichier);
 			// Buffer Addition
