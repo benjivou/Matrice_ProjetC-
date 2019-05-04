@@ -64,7 +64,7 @@ CFichier::CFichier(const char * cAdresse)
 			
 			/* test de la balise */
 			// balise invalide
-			if (FICStartWith(ppcTestBalise[uiLigne], pcLine, MAX_LONGUEUR_LINE) == 0)
+			if (FICDemarre_Avec(ppcTestBalise[uiLigne], pcLine, MAX_LONGUEUR_LINE) == 0)
 			{
 				fclose(pfFile);
 				CException EXCBalise_Invalid(BALISE_INVALID);
@@ -110,7 +110,7 @@ CFichier::CFichier(const char * cAdresse)
 
 
 		// Création de l'objet CMatrice
-		if (FICStartWith("double", pcArgType, MAX_TAILLE_ARG) == 1)
+		if (FICDemarre_Avec("double", pcArgType, MAX_TAILLE_ARG) == 1)
 		{
 			
 			FICCopieString((char*)"double",pcType);				// Sauvegarde du type 
@@ -173,7 +173,7 @@ char * CFichier::FICFindFirstChar(char * pcLigne, char cSeparateur)
  *\param[in] cMot à comparer
  *\param[out] 1 si c'est bon 0 sinon
  */
-int CFichier::FICStartWith(const char * cPrefix, const char * cMot, int iLongueurPrefix)
+int CFichier::FICDemarre_Avec(const char * cPrefix, const char * cMot, int iLongueurPrefix)
 {	
 	{
 		

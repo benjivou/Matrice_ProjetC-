@@ -20,9 +20,9 @@ public:
 	~CException(); //Destructeur qui n'a pas d'utilité
 
 	//Méthodes
-	unsigned int EXCLireErreur() { return uiEXCErreur; } //inline
-	void EXCModifierErreur(unsigned int uiErreur) { uiEXCErreur = uiErreur; } //inline
-	void EXCAfficherErreur();
+	unsigned int EXCLire_Erreur() { return uiEXCErreur; } //inline
+	void EXCModifier_Erreur(unsigned int uiErreur) { uiEXCErreur = uiErreur; } //inline
+	void EXCAfficher_Erreur();
 };
 
 #endif //CEXCEPTION_H

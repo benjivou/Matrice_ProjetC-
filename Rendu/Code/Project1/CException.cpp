@@ -9,9 +9,9 @@ CException::~CException()
 {
 }
 
-void CException::EXCAfficherErreur()
+void CException::EXCAfficher_Erreur()
 {
-	switch (EXCLireErreur())
+	switch (EXCLire_Erreur())
 	{
 	case 1:
 		cerr << "Erreur : Initialisation taille matrice" << endl;

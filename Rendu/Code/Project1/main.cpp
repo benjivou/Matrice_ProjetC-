@@ -189,7 +189,7 @@ int main(int argc, char *argv[]
 		}
 		catch (CException EXCErreur)
 		{
-			EXCErreur.EXCAfficherErreur();
+			EXCErreur.EXCAfficher_Erreur();
 			free(ppMATEntree);
 			for (size_t iCurrentFicfichier = 0; iCurrentFicfichier < uiNbMatriceValide; iCurrentFicfichier++)
 			{
