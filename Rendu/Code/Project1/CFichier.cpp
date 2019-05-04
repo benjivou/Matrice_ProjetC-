@@ -64,7 +64,7 @@ CFichier::CFichier(const char * cAdresse)
 			
 			/* test de la balise */
 			// balise invalide
-			if (FICStartWith(ppcTestBalise[uiLigne], pcLine, MAX_LONGUEUR_LINE) == 0)
+			if (FICDemarre_Avec(ppcTestBalise[uiLigne], pcLine, MAX_LONGUEUR_LINE) == 0)
 			{
 				fclose(pfFile);
 				CException EXCBalise_Invalid(BALISE_INVALID);
@@ -80,7 +80,7 @@ CFichier::CFichier(const char * cAdresse)
 				if (uiLigne == 0)
 				{
 					// Si erreur : Type trop long
-					if (FICCopieString(pcLine + iPos-1, pcArgType) == 1)
+					if (FICCopie_String(pcLine + iPos-1, pcArgType) == 1)
 					{
 						fclose(pfFile);
 						CException EXCType_Trop_Long(TYPE_TROP_LONG);
@@ -110,10 +110,10 @@ CFichier::CFichier(const char * cAdresse)
 
 
 		// Création de l'objet CMatrice
-		if (FICStartWith("double", pcArgType, MAX_TAILLE_ARG) == 1)
+		if (FICDemarre_Avec("double", pcArgType, MAX_TAILLE_ARG) == 1)
 		{
 			
-			FICCopieString((char*)"double",pcType);				// Sauvegarde du type 
+			FICCopie_String((char*)"double",pcType);				// Sauvegarde du type 
 
 			uiPosLigne = 0;
 
@@ -152,7 +152,7 @@ void CFichier::FICAffiche_Contenu_Fich()
  *\brief trouve la première occurrence de cSeparateur dansla pcLigne
  *\param[out] pointeur sur la nouvelle occurrence, sinon pointeur nullptr
  */
-char * CFichier::FICFindFirstChar(char * pcLigne, char cSeparateur)
+char * CFichier::FICTrouve_Premiere_Occurrence(char * pcLigne, char cSeparateur)
 {
 	int iCurseur = 0;
 	while (pcLigne[iCurseur] != '\0')
@@ -173,7 +173,7 @@ char * CFichier::FICFindFirstChar(char * pcLigne, char cSeparateur)
  *\param[in] cMot à comparer
  *\param[out] 1 si c'est bon 0 sinon
  */
-int CFichier::FICStartWith(const char * cPrefix, const char * cMot, int iLongueurPrefix)
+int CFichier::FICDemarre_Avec(const char * cPrefix, const char * cMot, int iLongueurPrefix)
 {	
 	{
 		
@@ -195,7 +195,7 @@ int CFichier::FICStartWith(const char * cPrefix, const char * cMot, int iLongueu
 	}
 }
 
-int CFichier::FICCopieString(char * pcSrc, char * pcDest)
+int CFichier::FICCopie_String(char * pcSrc, char * pcDest)
 {
 	int iPos1 = 0;
 	int res;
@@ -219,7 +219,7 @@ int CFichier::FICStocke_Ligne_Dans_Matrice(char* pcLigne, CMatrice<double>* pmSt
 {
 	unsigned int uiCurrentColonne = 0;
 	char *pcCurrent;	// pointeur sur la derniere occurence du ' '
-	pcCurrent = FICFindFirstChar(pcLigne, ' ');
+	pcCurrent = FICTrouve_Premiere_Occurrence(pcLigne, ' ');
 
 	while (pcCurrent != nullptr && uiCurrentColonne != (pmStockage->MTPLire_NbColonne() - 1))
 	{
@@ -227,7 +227,7 @@ int CFichier::FICStocke_Ligne_Dans_Matrice(char* pcLigne, CMatrice<double>* pmSt
 		
 		pmatStockage->MTPModifier_Element(uiCurrentLigne, uiCurrentColonne, atof(pcLigne));	// remplissage de la matrice
 		pcLigne = pcCurrent + 1;															// déplace le pointeur
-		pcCurrent = FICFindFirstChar(pcLigne, ' ');
+		pcCurrent = FICTrouve_Premiere_Occurrence(pcLigne, ' ');
 		uiCurrentColonne++;
 	}
 

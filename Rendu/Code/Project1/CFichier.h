@@ -56,9 +56,9 @@ private:
 	CMatrice <double> *pmatStockage;
 	char pcType[MAX_TAILLE_ARG];
 
-	char* FICFindFirstChar(char * pcLigne, char cSeparateur);
+	char* FICTrouve_Premiere_Occurrence(char * pcLigne, char cSeparateur);
 	int FICDemarre_Avec(const char* cPrefix, const char* cMot, int iLongueurPrefix);
-	int FICCopieString(char *pcSrc, char* pcDest);
+	int FICCopie_String(char *pcSrc, char* pcDest);
 	int FICStocke_Ligne_Dans_Matrice(char* pcLigne, CMatrice<double> *pmStockage, unsigned int uiCurrentLigne);
 };
 #include "CFichier.cpp"
