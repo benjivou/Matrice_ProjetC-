@@ -17,7 +17,7 @@ int main(int argc, char *argv[]
 
 
 	// Si erreur : pas de paramètre
-	if (argc > 0)
+	if (argc > 1)
 	{
 		/* Etape 1 : recupération des paramèrtres */
 		CMatrice<double> **ppmatEntree = (CMatrice<double>**)malloc(sizeof(void *) * argc - 1);	// Stockage des pointeurs de Matrice en entée
@@ -71,9 +71,9 @@ int main(int argc, char *argv[]
 				{
 					COperator<double>::OPEMultiplication_Externe(ppmatEntree[iPosition_Matrice][0], dSaisieUtilisateur).MTPAfficherMatrice();
 				}
-				catch (const std::exception&)
+				catch (CException excErreur)
 				{
-					std::cout << "Probléme de Multiplication sur la matrice numéro : " << iPosition_Matrice << '\n';
+					throw(excErreur);
 				}
 
 			}
@@ -86,9 +86,9 @@ int main(int argc, char *argv[]
 				{
 					COperator<double>::OPEDivision_Externe(ppmatEntree[iPosition_Matrice][0], dSaisieUtilisateur).MTPAfficherMatrice();
 				}
-				catch (const std::exception&)
+				catch (CException excErreur)
 				{
-					std::cout << "Probléme de Division sur la matrice numéro : " << iPosition_Matrice << '\n';
+					throw(excErreur);
 				}
 
 			}
@@ -154,12 +154,7 @@ int main(int argc, char *argv[]
 			{
 				try
 				{
-					
 					*pmatBuffer = *pmatBuffer * ppmatEntree[iPosition_Matrice][0];
-					
-					
-
-
 				}
 				catch (CException excErreur)
 				{
@@ -173,9 +168,10 @@ int main(int argc, char *argv[]
 			/* Step final : Vidange memoire*/
 			// Matrice d'entrée
 			free(ppmatEntree);
+			
 			for (size_t iCurrentFicfichier = 0; iCurrentFicfichier < uiNbMatriceValide; iCurrentFicfichier++)
 			{
-				delete ppficBuffer_CFichier[uiNbMatriceValide];
+				delete ppficBuffer_CFichier[iCurrentFicfichier];
 			}
 			free(ppficBuffer_CFichier);
 			// Buffer Addition
@@ -187,17 +183,17 @@ int main(int argc, char *argv[]
 			free(ppmatEntree);
 			for (size_t iCurrentFicfichier = 0; iCurrentFicfichier < uiNbMatriceValide; iCurrentFicfichier++)
 			{
-				delete ppficBuffer_CFichier[uiNbMatriceValide];
+				delete ppficBuffer_CFichier[iCurrentFicfichier];
 			}
 			free(ppficBuffer_CFichier);
 			// Buffer Addition
-
 			
 		}
-
 	}
-
-	getchar();
+	else
+	{
+		cout << "Donner un fichier la prochaine fois" << endl;
+	}
 	
 	return 0;
 }

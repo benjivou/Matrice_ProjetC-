@@ -51,7 +51,7 @@ CFichier::CFichier(const char * cAdresse)
 	// Si erreur : Ouverture
 	if (pfFile == NULL)
 	{
-		fclose(pfFile);
+		
 		CException EXCChemin_Invalid(CHEMIN_INVALID);
 		throw EXCChemin_Invalid;
 	}
