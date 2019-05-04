@@ -7,15 +7,21 @@ class CException
 {
 
 private:
+	//Attributs
+
 	unsigned int uiEXCErreur;
 
 public:
-	CException();
-	CException(unsigned int uiErreur) { uiEXCErreur = uiErreur; }
-	~CException();
 
-	unsigned int EXCLireErreur() { return uiEXCErreur; }
-	void EXCModifierErreur(unsigned int uiErreur) { uiEXCErreur = uiErreur; }
+	//Constructeurs et Destructeurs
+
+	CException(); //Constructeur qui ne fait rien
+	CException(unsigned int uiErreur) { uiEXCErreur = uiErreur; } //inline
+	~CException(); //Destructeur qui n'a pas d'utilité
+
+	//Méthodes
+	unsigned int EXCLireErreur() { return uiEXCErreur; } //inline
+	void EXCModifierErreur(unsigned int uiErreur) { uiEXCErreur = uiErreur; } //inline
 	void EXCAfficherErreur();
 };
 
