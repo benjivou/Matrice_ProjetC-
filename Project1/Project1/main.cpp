@@ -41,16 +41,15 @@ int main(int argc, char *argv[]
 
 			/* Etape 2 : Saisie de l'utilisateur */
 			// Récupération
-			while (dSaisieUtilisateur < 0.0)
-			{
-				std::cout << "Saisir une valeur pour la division des matrices :\n";
+			
+			std::cout << "Saisir une valeur pour la division des matrices :\n"<< "Tous caractères autre qu'un nombre sera égale à 0\n";
 
 
-				std::cin >> dSaisieUtilisateur;
-				cin.clear();
+			std::cin >> dSaisieUtilisateur;
+			cin.clear();
 
 
-			}
+			
 			std::cout << "Saisie reussite\n";
 
 			/* Step 3 : Opérations externes */
