@@ -42,7 +42,7 @@ int main(int argc, char *argv[]
 			/* Etape 2 : Saisie de l'utilisateur */
 			// Récupération
 			
-			std::cout << "Saisir une valeur pour la division des matrices :\n"<< "Tous caractères autre qu'un nombre sera égale à 0\n";
+			std::cout << "Saisir une valeur pour la division des matrices :\n"<< "Tous caracteres autre qu'un nombre vaut 0\n";
 
 
 			std::cin >> dSaisieUtilisateur;
@@ -136,7 +136,8 @@ int main(int argc, char *argv[]
 			}
 			pmatBuffer->MTPAfficherMatrice();
 			cout << "Test de la soustraction/addition termine\n";
-			/* Step final : Vidange mémoire*/
+
+			
 
 			// Test Multiplication des Matrices passez en paramètre
 			cout << "Debut du test de la multiplication interne" << endl;
@@ -157,6 +158,23 @@ int main(int argc, char *argv[]
 			}
 			pmatBuffer->MTPAfficherMatrice();
 			cout << "Test de la multiplication interne termine\n";
+
+			/* Step bonus : Transposition des matrices*/
+			cout << "Debut du test de la transposee" << endl;
+			for (size_t iPosition_Matrice = 0; iPosition_Matrice < uiNbMatriceValide; iPosition_Matrice++)
+			{
+				try
+				{
+					COperator<double>::OPETranspose_Matrice(ppMATEntree[iPosition_Matrice][0]).MTPAfficherMatrice();
+				}
+				catch (CException excErreur)
+				{
+					throw(excErreur);
+				}
+
+			}
+			cout << "Test de la stransposee termine\n";
+			
 			/* Step final : Vidange memoire*/
 			// Matrice d'entrée
 			free(ppMATEntree);
