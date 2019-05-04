@@ -47,14 +47,6 @@ int main(int argc, char *argv[]
 
 
 				std::cin >> dSaisieUtilisateur;
-				
-				while (!dSaisieUtilisateur)
-				{
-					cin.clear();
-					printf("Une valeur strictement positive est plus apprpriée dans cette situation\n");
-					std::cin >> dSaisieUtilisateur;
-				}
-				
 				cin.clear();
 
 
