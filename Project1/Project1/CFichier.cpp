@@ -230,6 +230,7 @@ int CFichier::FICStocke_Ligne_Dans_Matrice(char* pcLigne, CMatrice<double>* pmSt
 		pcCurrent = FICFindFirstChar(pcLigne, ' ');
 		uiCurrentColonne++;
 	}
+
 	// la dernière occurrence est volontairement différente, car il n'y a pas à repositionner pcCurrent après
 	pmatStockage->MTPModifier_Element(uiCurrentLigne, uiCurrentColonne, atof(pcLigne));	// dernier élément
 
