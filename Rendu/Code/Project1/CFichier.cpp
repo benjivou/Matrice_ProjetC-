@@ -6,7 +6,7 @@
  */
 CFichier::CFichier()
 {
-	pmatStockage = nullptr;
+	pMATStockage = nullptr;
 	*pcType = '\0';
 }
 
@@ -19,7 +19,7 @@ CFichier::~CFichier()
 	// s'il y a une CMatrice allouée dynamiquement
 	if (*pcType != '\0')
 	{
-		delete pmatStockage;
+		delete pMATStockage;
 	}
 }
 
@@ -81,6 +81,7 @@ CFichier::CFichier(const char * cAdresse)
 					// Si erreur : Type trop long
 					if (FICCopie_String(pcLine + iPos - 1, pcArgType) == 1)
 					{
+						
 						fclose(pfFile);
 						CException EXCType_Trop_Long(TYPE_TROP_LONG);
 						throw EXCType_Trop_Long;
@@ -89,30 +90,32 @@ CFichier::CFichier(const char * cAdresse)
 				/* balise restantes*/
 				else
 				{
+					
 					iPos--;	// repositionnement du ^pointeur sur le début de la value
 					/* balise NBLigne, NBColonne*/
 					if (uiLigne == 1)					// Balise NBLigne
 					{
+						
+						FICEst_Un_Entier(pcLine + iPos);
+						
 						iLigne = atoi((pcLine + iPos));
-
-						{
-
-						}
-					}
-					if (uiLigne == 2)					// Balise NBColonne
-					{
-						uiColonne = atoi((pcLine + iPos));
+						
+						
 					}
 					else
 					{
-						if (uiLigne <= 0 || uiColonne <= 0)
+						if (uiLigne == 2)					// Balise NBColonne
+						{
+							FICEst_Un_Entier(pcLine + iPos);
+							
+							uiColonne = atoi((pcLine + iPos));
+						}
+						if (iLigne <= 0 || uiColonne <= 0)
 						{
 							fclose(pfFile);
 							throw(new CException(TAILLE_MATRICE_INVALID));
 						}
 					}
-
-
 					
 				}
 				uiLigne++;
@@ -127,14 +130,22 @@ CFichier::CFichier(const char * cAdresse)
 
 			uiPosLigne = 0;
 
-			pmatStockage = new CMatrice<double>(iLigne, uiColonne);
+			pMATStockage = new CMatrice<double>(iLigne, uiColonne);
 			/* Step3 : Remplissage */
 			// recupération de la ligne
-			while (uiPosLigne < iLigne && fgets(pcLine, MAX_LONGUEUR_LINE, pfFile) != NULL )
+			try {
+				while (uiPosLigne < iLigne && fgets(pcLine, MAX_LONGUEUR_LINE, pfFile) != NULL)
+				{
+					// Remplissage Ligne à Ligne
+					FICStocke_Ligne_Dans_Matrice(pcLine, pMATStockage, uiPosLigne);
+					uiPosLigne++;
+				}
+			}
+			catch(CException EXCErreur)
 			{
-				// Remplissage Ligne à Ligne
-				FICStocke_Ligne_Dans_Matrice(pcLine, pmatStockage, uiPosLigne);
-				uiPosLigne++;		
+				fclose(pfFile);
+				cerr << " Fichier \n Ligne "<< NB_BALISE + uiPosLigne << " : ";
+				throw(EXCErreur);
 			}
 		}
 		// Si erreur : mauvais type
@@ -156,7 +167,52 @@ CFichier::CFichier(const char * cAdresse)
 void CFichier::FICAffiche_Contenu_Fich()
 {
 	printf(" \nSon type est : %s \n", pcType);
-	pmatStockage->MTPAfficherMatrice();
+	pMATStockage->MTPAfficherMatrice();
+}
+
+
+void CFichier::FICEst_Un_Entier(const char * pcValeur)
+{
+	unsigned int uiPos = 0;
+	
+	while ( pcValeur[uiPos] >= '0' && pcValeur[uiPos] <= '9' )
+	{
+		
+		uiPos++;
+	}
+
+	if (pcValeur[uiPos] != '\n' )
+	{
+		
+		throw(new CException(NOT_A_NUMBER));
+	}
+}
+
+/*
+ *\brief si la chaine n'st pas un nombre throw erreur
+ *\param[in] pcValeur a analyser
+ */
+void CFichier::FICEst_Un_Reel(const char * pcValeur)
+{
+	unsigned int uiPos =0;
+	unsigned int uiNbDeVirgules = 0;
+	unsigned int uiNbDeSignes = 0;
+	while (pcValeur[uiPos] == '.' || (pcValeur[uiPos] <= '9' && pcValeur[uiPos] >= '0') || pcValeur[uiPos] == '+' || pcValeur[uiPos] == '-')
+	{
+		if (pcValeur[uiPos] == '+' || pcValeur[uiPos] == '-')
+		{
+			uiNbDeSignes++;
+		}
+		if (pcValeur[uiPos] == '.')
+		{
+			uiNbDeVirgules++;
+		}
+		uiPos++;
+	}
+	if (pcValeur[uiPos] != '\0' ||uiNbDeSignes > 1 || uiNbDeVirgules > 1)
+	{
+		throw(new CException(NOT_A_REEL));
+	}
 }
 	
 	
@@ -229,6 +285,7 @@ int CFichier::FICCopie_String(char * pcSrc, char * pcDest)
 	int iPos1 = 0;
 	int res;
 	// Stockage des éléments
+
 	while (*(pcSrc + iPos1) != '\0' && iPos1 < MAX_TAILLE_ARG)	// MAX_TAILLE_ARG donne la taille max du buffer pcDest
 	{
 		pcDest[iPos1] = pcSrc[iPos1];			
@@ -260,15 +317,19 @@ int CFichier::FICStocke_Ligne_Dans_Matrice(char* pcLigne, CMatrice<double>* pmSt
 	while (pcCurrent != nullptr && uiCurrentColonne != (pmStockage->MTPLire_NbColonne() - 1))
 	{
 		*pcCurrent = '\0';
-		
-		pmatStockage->MTPModifier_Element(uiCurrentLigne, uiCurrentColonne, atof(pcLigne));	// remplissage de la matrice
+		FICEst_Un_Reel((const char *) pcLigne);
+		pMATStockage->MTPModifier_Element(uiCurrentLigne, uiCurrentColonne, atof(pcLigne));	// remplissage de la matrice
 		pcLigne = pcCurrent + 1;															// déplacement le pointeur
 		pcCurrent = FICTrouve_Premiere_Occurrence(pcLigne, ' ');							// Recherche de la prochaine valeur
 		uiCurrentColonne++;
 	}
 
+	if (uiCurrentColonne < (pmStockage->MTPLire_NbColonne() - 1))
+	{
+		throw(CException(MATRICE_MAL_DECLARE));
+	}
 	// la dernière occurrence est volontairement différente, car il n'y a pas à repositionner pcCurrent après
-	pmatStockage->MTPModifier_Element(uiCurrentLigne, uiCurrentColonne, atof(pcLigne));	// dernier élément
+	pMATStockage->MTPModifier_Element(uiCurrentLigne, uiCurrentColonne, atof(pcLigne));	// dernier élément
 
 	return 0;
 }

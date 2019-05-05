@@ -44,6 +44,16 @@ void CException::EXCAfficher_Erreur()
 		cerr << "Erreur: Type different de double" << endl;
 		break;
 	case 15:
-		cerr << "Erreur: Taille invalid de matrice, Corrigez le fichier en param" << endl;
+		cerr << "Erreur: Taille invalid de matrice, Corrigez le fichier" << endl;
+		break;
+	case 16:
+		cerr << "Erreur: La Valeur n'est pas un entier naturel" << endl;
+		break;
+	case 17:
+		cerr << "Erreur: La Valeur n'est pas un Reel" << endl;
+		break;
+	case 18:
+		cerr << "Erreur: Matrice Mal déclarée" << endl;
+		break;
 	}
 }

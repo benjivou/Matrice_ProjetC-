@@ -35,7 +35,9 @@ const char *ppcTestBalise[NB_BALISE] = { pcBaliseType,pcBaliseNbLignes,pcBaliseN
 #define TYPE_TROP_LONG 13
 #define MAUVAIS_TYPE_MATRICE 14
 #define TAILLE_MATRICE_INVALID 15
-
+#define NOT_A_NUMBER 16
+#define NOT_A_REEL 17
+#define MATRICE_MAL_DECLARE 18
 class CFichier
 {
 public:
@@ -44,19 +46,23 @@ public:
 	~CFichier();
 
 	// Getter
-	CMatrice <double> *FICLire_MTMPMatrice() { return pmatStockage; };// inline
-	int FICLire_NbLigne() { return pmatStockage->MTPLire_NbLigne(); } //inline
-	int FICLire_NbColonne() { return pmatStockage->MTPLire_NbColonne(); } //inline
+	CMatrice <double> *FICLire_MTMPMatrice() { return pMATStockage; };// inline
+	int FICLire_NbLigne() { return pMATStockage->MTPLire_NbLigne(); } //inline
+	int FICLire_NbColonne() { return pMATStockage->MTPLire_NbColonne(); } //inline
 	char* FICLire_Type() { return pcType; }; // inline
 
 	// Afficheur
 	void FICAffiche_Contenu_Fich();	// affiche le contenu de la matrice
 
+	
+	
 private:
-
-	CMatrice <double> *pmatStockage;
+	
+	CMatrice <double> *pMATStockage;
 	char pcType[MAX_TAILLE_ARG];
 
+	void FICEst_Un_Entier(const char* pcValeur);
+	void FICEst_Un_Reel(const char* pcValeur);	// si la chaine n'est pas un nombre throw erreur
 	char* FICTrouve_Premiere_Occurrence(char * pcLigne, char cSeparateur);
 	int FICDemarre_Avec(const char* cPrefix, const char* cMot, int iLongueurPrefix);
 	int FICCopie_String(char *pcSrc, char* pcDest);

@@ -25,7 +25,7 @@ int main(int argc, char *argv[]
 
 		try
 		{
-
+			printf("Debut de Generation\n");
 			// récupération / génération
 			for (int iPosition_Entre = 1; iPosition_Entre < argc; iPosition_Entre++)
 			{
